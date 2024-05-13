@@ -29,7 +29,7 @@ export default function StartPage() {
       <div className="start-menu xl:pr-16">
         <div className="text-center">
           <span className="font-header hover:text-gray-600/75 text-3xl xs:text-4xl hover:cursor-none">
-            Ola Kasprzykiewicz
+            Pola Walczak
           </span>
         </div>
         <div className="flex flex-row px-8 pt-4 xs:pt-8 justify-center xl:flex-col xl:text-center xl:pt-36">

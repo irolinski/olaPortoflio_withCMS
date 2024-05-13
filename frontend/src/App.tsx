@@ -7,9 +7,29 @@ import AllProjects from "./Pages/Projects/AllProjects";
 import ProjectPage from "./Pages/Projects/ProjectPage.tsx";
 import { projectData } from "../public/project_data/projectData_all.ts";
 import AboutPage from "./Pages/Projects/AboutPage.tsx";
+import { useEffect, useState } from "react";
+
 
 export default function App() {
   const location = useLocation();
+  // const url = 'http://localhost:3000/test'
+
+  // fetch(url, { mode: 'no-cors'})
+  // .then(res => console.log(res))
+
+  const [data, setData] = useState({});
+
+  useEffect(() => {
+    (async () => {
+      const response = await fetch(
+        "http://localhost:3000/test"
+      );
+      const parsed = await response.json();
+      setData(parsed);
+    })();
+  }, []);
+  
+  console.log(data)
 
   return (
     <div className="min-h-full max-w-[1920px] mx-auto 3xl:relative 3xl:top-[12.5vh]">
