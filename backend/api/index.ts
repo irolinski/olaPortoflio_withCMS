@@ -30,10 +30,15 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-app.get("/test", async (req, res, next) => {
-  const q = await client.query({ text: `SELECT * FROM PHOTOS` });
+app.get("/api/series", async (req, res, next) => {
+  const q = await client.query({ text: `SELECT * FROM SERIES` });
   res.send(JSON.stringify(q.rows));
 });
+
+app.get("/api/profile", async (req, res, next) => {
+  const q = await client.query({ text: `SELECT * FROM PROFILE` });
+  res.send(JSON.stringify(q.rows))
+})
 
 app.listen(3000, () =>
   console.log("🚀 Server ready at: http://localhost:3000")

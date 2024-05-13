@@ -1,9 +1,29 @@
-import { useState } from "react";
-import { slides } from "../../../public/project_data/start_slides.ts";
+import { useEffect, useState } from "react";
+// import { slides } from "../../../public/project_data/start_slides.ts";
+
+
+
 export default function StartPage() {
+
+  const blankData: any[] | (() => any[]) = []
+
+const [slideshowData, setSlideshowData] = useState<any[]>(blankData);
+  
+useEffect(() => {
+  (async () => {
+    const profileAPIRes = await fetch("http://localhost:3000/api/profile")
+    const profile = await profileAPIRes.json();
+    setSlideshowData(profile[0].slides);
+  })();
+}, []);
+
+let slides = slideshowData;
+
+
   const [image, setImage] = useState(slides[0]);
   const [slideOpacity, setSlideOpacity] = useState(1);
   const [imgNum, setImgNum] = useState(1);
+  const [showStarted, setShowStarted] = useState(0);
 
   function slide() {
     setSlideOpacity(0);
@@ -19,12 +39,17 @@ export default function StartPage() {
 
   return (
     <div
-      className="flex flex-wrap mx-auto justify-around sm:p-16 mx-4 mb-36 mt-24 sm:mt-0 sm:mb-8 md:mb-0 lg:mb-8 lg:pt-[12.5vh] xl:flex-nowrap xl:py-[20vh]"
-      onLoad={() =>
-        setTimeout(() => {
-          slide();
-        }, 7000)
-      }
+      className="flex flex-wrap mx-auto justify-around sm:p-16 mb-36 mt-24 sm:mt-0 sm:mb-8 md:mb-0 lg:mb-8 lg:pt-[12.5vh] xl:flex-nowrap xl:py-[20vh]"
+      onLoad={() => {
+        if (!showStarted) {
+          slide()
+          setShowStarted(1)
+        } else {
+          setTimeout(() => {
+            slide();
+          }, 7000)
+        }
+      }}
     >
       <div className="start-menu xl:pr-16">
         <div className="text-center">

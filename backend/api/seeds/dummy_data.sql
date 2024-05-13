@@ -1,62 +1,18 @@
-﻿DROP TABLE IF EXISTS _FUNNYNAME;
+﻿DROP TABLE IF EXISTS PROFILE;
 
-CREATE TABLE _FUNNYNAME(
-    FIRST_NAME VARCHAR(512),
-    LAST_NAME VARCHAR(512),
-    GENDER VARCHAR(512),
-    COUNTRY	VARCHAR(512),
-    AGE	INT,
-    BIRTH_DATE VARCHAR(512),
-    ID	INT
+CREATE TABLE PROFILE(
+    SLIDES VARCHAR ARRAY
 );
 
-INSERT INTO _FUNNYNAME (FIRST_NAME, LAST_NAME, GENDER, COUNTRY, AGE, BIRTH_DATE, ID) VALUES ('Dulce', 'Abril', 'Female', 'United States', '32', '15/10/2017', '1562');
-INSERT INTO _FUNNYNAME (FIRST_NAME, LAST_NAME, GENDER, COUNTRY, AGE, BIRTH_DATE, ID) VALUES ('Mara', 'Hashimoto', 'Female', 'Great Britain', '25', '16/08/2016', '1582');
-INSERT INTO _FUNNYNAME (FIRST_NAME, LAST_NAME, GENDER, COUNTRY, AGE, BIRTH_DATE, ID) VALUES ('Philip', 'Gent', 'Male', 'France', '36', '21/05/2015', '2587');
-INSERT INTO _FUNNYNAME (FIRST_NAME, LAST_NAME, GENDER, COUNTRY, AGE, BIRTH_DATE, ID) VALUES ('Kathleen', 'Hanner', 'Female', 'United States', '25', '15/10/2017', '3549');
-INSERT INTO _FUNNYNAME (FIRST_NAME, LAST_NAME, GENDER, COUNTRY, AGE, BIRTH_DATE, ID) VALUES ('NereIDa', 'Magwood', 'Female', 'United States', '58', '16/08/2016', '2468');
-INSERT INTO _FUNNYNAME (FIRST_NAME, LAST_NAME, GENDER, COUNTRY, AGE, BIRTH_DATE, ID) VALUES ('Gaston', 'Brumm', 'Male', 'United States', '24', '21/05/2015', '2554');
-INSERT INTO _FUNNYNAME (FIRST_NAME, LAST_NAME, GENDER, COUNTRY, AGE, BIRTH_DATE, ID) VALUES ('Etta', 'Hurn', 'Female', 'Great Britain', '56', '15/10/2017', '3598');
-INSERT INTO _FUNNYNAME (FIRST_NAME, LAST_NAME, GENDER, COUNTRY, AGE, BIRTH_DATE, ID) VALUES ('Earlean', 'Melgar', 'Female', 'United States', '27', '16/08/2016', '2456');
-INSERT INTO _FUNNYNAME (FIRST_NAME, LAST_NAME, GENDER, COUNTRY, AGE, BIRTH_DATE, ID) VALUES ('Vincenza', 'Weiland', 'Female', 'United States', '40', '21/05/2015', '6548');
-INSERT INTO _FUNNYNAME (FIRST_NAME, LAST_NAME, GENDER, COUNTRY, AGE, BIRTH_DATE, ID) VALUES ('Fallon', 'Winward', 'Female', 'Great Britain', '28', '16/08/2016', '5486');
-INSERT INTO _FUNNYNAME (FIRST_NAME, LAST_NAME, GENDER, COUNTRY, AGE, BIRTH_DATE, ID) VALUES ('Arcelia', 'Bouska', 'Female', 'Great Britain', '39', '21/05/2015', '1258');
-INSERT INTO _FUNNYNAME (FIRST_NAME, LAST_NAME, GENDER, COUNTRY, AGE, BIRTH_DATE, ID) VALUES ('Franklyn', 'Unknow', 'Male', 'France', '38', '15/10/2017', '2579');
-INSERT INTO _FUNNYNAME (FIRST_NAME, LAST_NAME, GENDER, COUNTRY, AGE, BIRTH_DATE, ID) VALUES ('Sherron', 'Ascencio', 'Female', 'Great Britain', '32', '16/08/2016', '3256');
-INSERT INTO _FUNNYNAME (FIRST_NAME, LAST_NAME, GENDER, COUNTRY, AGE, BIRTH_DATE, ID) VALUES ('Marcel', 'Zabriskie', 'Male', 'Great Britain', '26', '21/05/2015', '2587');
-INSERT INTO _FUNNYNAME (FIRST_NAME, LAST_NAME, GENDER, COUNTRY, AGE, BIRTH_DATE, ID) VALUES ('Kina', 'Hazelton', 'Female', 'Great Britain', '31', '16/08/2016', '3259');
-INSERT INTO _FUNNYNAME (FIRST_NAME, LAST_NAME, GENDER, COUNTRY, AGE, BIRTH_DATE, ID) VALUES ('Shavonne', 'Pia', 'Female', 'France', '24', '21/05/2015', '1546');
-INSERT INTO _FUNNYNAME (FIRST_NAME, LAST_NAME, GENDER, COUNTRY, AGE, BIRTH_DATE, ID) VALUES ('Shavon', 'Benito', 'Female', 'France', '39', '15/10/2017', '3579');
-INSERT INTO _FUNNYNAME (FIRST_NAME, LAST_NAME, GENDER, COUNTRY, AGE, BIRTH_DATE, ID) VALUES ('Lauralee', 'Perrine', 'Female', 'Great Britain', '28', '16/08/2016', '6597');
-INSERT INTO _FUNNYNAME (FIRST_NAME, LAST_NAME, GENDER, COUNTRY, AGE, BIRTH_DATE, ID) VALUES ('Loreta', 'Curren', 'Female', 'France', '26', '21/05/2015', '9654');
-INSERT INTO _FUNNYNAME (FIRST_NAME, LAST_NAME, GENDER, COUNTRY, AGE, BIRTH_DATE, ID) VALUES ('Teresa', 'Strawn', 'Female', 'France', '46', '21/05/2015', '3569');
-INSERT INTO _FUNNYNAME (FIRST_NAME, LAST_NAME, GENDER, COUNTRY, AGE, BIRTH_DATE, ID) VALUES ('Belinda', 'Partain', 'Female', 'United States', '37', '15/10/2017', '2564');
-INSERT INTO _FUNNYNAME (FIRST_NAME, LAST_NAME, GENDER, COUNTRY, AGE, BIRTH_DATE, ID) VALUES ('Holly', 'Eudy', 'Female', 'United States', '52', '16/08/2016', '8561');
-INSERT INTO _FUNNYNAME (FIRST_NAME, LAST_NAME, GENDER, COUNTRY, AGE, BIRTH_DATE, ID) VALUES ('Many', 'Cuccia', 'Female', 'Great Britain', '46', '21/05/2015', '5489');
-INSERT INTO _FUNNYNAME (FIRST_NAME, LAST_NAME, GENDER, COUNTRY, AGE, BIRTH_DATE, ID) VALUES ('Libbie', 'Dalby', 'Female', 'France', '42', '21/05/2015', '5489');
-INSERT INTO _FUNNYNAME (FIRST_NAME, LAST_NAME, GENDER, COUNTRY, AGE, BIRTH_DATE, ID) VALUES ('Lester', 'Prothro', 'Male', 'France', '21', '15/10/2017', '6574');
-INSERT INTO _FUNNYNAME (FIRST_NAME, LAST_NAME, GENDER, COUNTRY, AGE, BIRTH_DATE, ID) VALUES ('Marvel', 'Hail', 'Female', 'Great Britain', '28', '16/08/2016', '5555');
-INSERT INTO _FUNNYNAME (FIRST_NAME, LAST_NAME, GENDER, COUNTRY, AGE, BIRTH_DATE, ID) VALUES ('Angelyn', 'Vong', 'Female', 'United States', '29', '21/05/2015', '6125');
-INSERT INTO _FUNNYNAME (FIRST_NAME, LAST_NAME, GENDER, COUNTRY, AGE, BIRTH_DATE, ID) VALUES ('Francesca', 'Beaudreau', 'Female', 'France', '23', '15/10/2017', '5412');
-INSERT INTO _FUNNYNAME (FIRST_NAME, LAST_NAME, GENDER, COUNTRY, AGE, BIRTH_DATE, ID) VALUES ('Garth', 'Gangi', 'Male', 'United States', '41', '16/08/2016', '3256');
-INSERT INTO _FUNNYNAME (FIRST_NAME, LAST_NAME, GENDER, COUNTRY, AGE, BIRTH_DATE, ID) VALUES ('Carla', 'Trumbull', 'Female', 'Great Britain', '28', '21/05/2015', '3264');
-INSERT INTO _FUNNYNAME (FIRST_NAME, LAST_NAME, GENDER, COUNTRY, AGE, BIRTH_DATE, ID) VALUES ('Veta', 'Muntz', 'Female', 'Great Britain', '37', '15/10/2017', '4569');
-INSERT INTO _FUNNYNAME (FIRST_NAME, LAST_NAME, GENDER, COUNTRY, AGE, BIRTH_DATE, ID) VALUES ('Stasia', 'Becker', 'Female', 'Great Britain', '34', '16/08/2016', '7521');
-INSERT INTO _FUNNYNAME (FIRST_NAME, LAST_NAME, GENDER, COUNTRY, AGE, BIRTH_DATE, ID) VALUES ('Jona', 'Grindle', 'Female', 'Great Britain', '26', '21/05/2015', '6458');
-INSERT INTO _FUNNYNAME (FIRST_NAME, LAST_NAME, GENDER, COUNTRY, AGE, BIRTH_DATE, ID) VALUES ('Judie', 'Claywell', 'Female', 'France', '35', '16/08/2016', '7569');
-INSERT INTO _FUNNYNAME (FIRST_NAME, LAST_NAME, GENDER, COUNTRY, AGE, BIRTH_DATE, ID) VALUES ('Dewitt', 'Borger', 'Male', 'United States', '36', '21/05/2015', '8514');
-INSERT INTO _FUNNYNAME (FIRST_NAME, LAST_NAME, GENDER, COUNTRY, AGE, BIRTH_DATE, ID) VALUES ('Nena', 'Hacker', 'Female', 'United States', '29', '15/10/2017', '8563');
-INSERT INTO _FUNNYNAME (FIRST_NAME, LAST_NAME, GENDER, COUNTRY, AGE, BIRTH_DATE, ID) VALUES ('Kelsie', 'Wachtel', 'Female', 'France', '27', '16/08/2016', '8642');
-INSERT INTO _FUNNYNAME (FIRST_NAME, LAST_NAME, GENDER, COUNTRY, AGE, BIRTH_DATE, ID) VALUES ('Sau', 'Pfau', 'Female', 'United States', '25', '21/05/2015', '9536');
-INSERT INTO _FUNNYNAME (FIRST_NAME, LAST_NAME, GENDER, COUNTRY, AGE, BIRTH_DATE, ID) VALUES ('Shanice', 'Mccrystal', 'Female', 'United States', '36', '21/05/2015', '2567');
-INSERT INTO _FUNNYNAME (FIRST_NAME, LAST_NAME, GENDER, COUNTRY, AGE, BIRTH_DATE, ID) VALUES ('Chase', 'Karner', 'Male', 'United States', '37', '15/10/2017', '2154');
-INSERT INTO _FUNNYNAME (FIRST_NAME, LAST_NAME, GENDER, COUNTRY, AGE, BIRTH_DATE, ID) VALUES ('Tommie', 'Underdahl', 'Male', 'United States', '26', '16/08/2016', '3265');
-INSERT INTO _FUNNYNAME (FIRST_NAME, LAST_NAME, GENDER, COUNTRY, AGE, BIRTH_DATE, ID) VALUES ('Dorcas', 'Darity', 'Female', 'United States', '37', '21/05/2015', '8765');
-INSERT INTO _FUNNYNAME (FIRST_NAME, LAST_NAME, GENDER, COUNTRY, AGE, BIRTH_DATE, ID) VALUES ('Angel', 'Sanor', 'Male', 'France', '24', '15/10/2017', '3259');
-INSERT INTO _FUNNYNAME (FIRST_NAME, LAST_NAME, GENDER, COUNTRY, AGE, BIRTH_DATE, ID) VALUES ('Willodean', 'Harn', 'Female', 'United States', '39', '16/08/2016', '3567');
-INSERT INTO _FUNNYNAME (FIRST_NAME, LAST_NAME, GENDER, COUNTRY, AGE, BIRTH_DATE, ID) VALUES ('Weston', 'Martina', 'Male', 'United States', '26', '21/05/2015', '6540');
-INSERT INTO _FUNNYNAME (FIRST_NAME, LAST_NAME, GENDER, COUNTRY, AGE, BIRTH_DATE, ID) VALUES ('Roma', 'Lafollette', 'Female', 'United States', '34', '15/10/2017', '2654');
-INSERT INTO _FUNNYNAME (FIRST_NAME, LAST_NAME, GENDER, COUNTRY, AGE, BIRTH_DATE, ID) VALUES ('Felisa', 'Cail', 'Female', 'United States', '28', '16/08/2016', '6525');
-INSERT INTO _FUNNYNAME (FIRST_NAME, LAST_NAME, GENDER, COUNTRY, AGE, BIRTH_DATE, ID) VALUES ('Demetria', 'Abbey', 'Female', 'United States', '32', '21/05/2015', '3265');
-INSERT INTO _FUNNYNAME (FIRST_NAME, LAST_NAME, GENDER, COUNTRY, AGE, BIRTH_DATE, ID) VALUES ('Jeromy', 'Danz', 'Male', 'United States', '39', '15/10/2017', '3265');
-INSERT INTO _FUNNYNAME (FIRST_NAME, LAST_NAME, GENDER, COUNTRY, AGE, BIRTH_DATE, ID) VALUES ('Rasheeda', 'Alkire', 'Female', 'United States', '29', '16/08/2016', '6125');
+INSERT INTO PROFILE (SLIDES) VALUES (
+    '{
+  "https://res.cloudinary.com/dtjtqp7r1/image/upload/v1712437325/z-Ola%20K.-Portfolio/___START/lcko8ioujdrzyuwruh6j.jpg",
+  "https://res.cloudinary.com/dtjtqp7r1/image/upload/v1712437326/z-Ola%20K.-Portfolio/___START/lonagzoln36ipkrlvmjb.jpg",
+  "https://res.cloudinary.com/dtjtqp7r1/image/upload/v1712437325/z-Ola%20K.-Portfolio/___START/hyio8vn9zxalsfofjmtr.jpg",
+  "https://res.cloudinary.com/dtjtqp7r1/image/upload/v1712437327/z-Ola%20K.-Portfolio/___START/qrngc6xacmpujp0ri3wv.jpg",
+  "https://res.cloudinary.com/dtjtqp7r1/image/upload/v1712437338/z-Ola%20K.-Portfolio/ABSTR/may1rp7sikkanto9cpro.jpg",
+  "https://res.cloudinary.com/dtjtqp7r1/image/upload/v1712437323/z-Ola%20K.-Portfolio/___START/bsymp6pezb9xti3knabl.jpg",
+  "https://res.cloudinary.com/dtjtqp7r1/image/upload/v1712437325/z-Ola%20K.-Portfolio/ABSTR/r6aphpcsxtq8tsvx39rz.jpg",
+  "https://res.cloudinary.com/dtjtqp7r1/image/upload/v1712437325/z-Ola%20K.-Portfolio/MAROCO/pshyehzxkdbjhbk1rdqz.jpg"
+}'
+);

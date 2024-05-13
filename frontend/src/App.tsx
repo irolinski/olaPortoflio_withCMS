@@ -5,53 +5,67 @@ import Navbar from "./Components/Navbar";
 import StartPage from "./Pages/Projects/StartPage.tsx";
 import AllProjects from "./Pages/Projects/AllProjects";
 import ProjectPage from "./Pages/Projects/ProjectPage.tsx";
-import { projectData } from "../public/project_data/projectData_all.ts";
+// import { projectData } from "../public/project_data/projectData_all.ts";
 import AboutPage from "./Pages/Projects/AboutPage.tsx";
 import { useEffect, useState } from "react";
+
+export type seriesType = {
+  name: string;
+  slides: Array<string>
+  url: string;
+  imgurl: string;
+};
+
+export type dataType = Array<seriesType> 
 
 
 export default function App() {
   const location = useLocation();
-  // const url = 'http://localhost:3000/test'
 
-  // fetch(url, { mode: 'no-cors'})
-  // .then(res => console.log(res))
+const blankData: any[] | (() => any[]) = []
 
-  const [data, setData] = useState({});
+  let [profileData, setProfileData] = useState<any[]>(blankData);
+  const [slideshowData, setSlideshowData] = useState<any[]>(blankData);
+  const [aboutPageData, setAboutPageData] = useState<any[]>(blankData);
+
+
+
+  let [imageData, setImageData] = useState<any[]>(blankData);
 
   useEffect(() => {
     (async () => {
-      const response = await fetch(
-        "http://localhost:3000/test"
-      );
-      const parsed = await response.json();
-      setData(parsed);
+      const profileAPIRes = await fetch("http://localhost:3000/api/profile")
+      const seriesAPIRes = await fetch("http://localhost:3000/api/series");
+      const profile = await profileAPIRes.json();
+      const series = await seriesAPIRes.json();
+      setSlideshowData(profile[0].slides);
+      setImageData(series);    
     })();
   }, []);
-  
-  console.log(data)
+
+
 
   return (
     <div className="min-h-full max-w-[1920px] mx-auto 3xl:relative 3xl:top-[12.5vh]">
       <Navbar location={location.pathname} />
-      <div  className="">
-      <Routes>
-        <Route path="/" element={<Navigate replace to="/start" />} />
-        <Route path="/start" element={<StartPage />} />
-        <Route path="/projekty" element={<AllProjects />} />
-        {projectData.map((p, i) => {
-          return (
-            <Route
-              path={p.url.substring(2)}
-              element={<ProjectPage name={p.name} slides={p.slides} />}
-              key={i}
-            />
-          );
-        })}
-        <Route path="/o-mnie" element={<AboutPage />} />
-        <Route path="*" element={<Navigate replace to="/start" />} />
+      <div className="">
+        <Routes>
+          <Route path="/" element={<Navigate replace to="/start" />} />
+          <Route path="/start" element={<StartPage />} />
+          <Route path="/projekty" element={<AllProjects imageData={imageData} />} />
+          {imageData.map((p: seriesType, i: number) => {
+            return (
+              <Route
+                path={p.url}
+                element={<ProjectPage name={p.name} slides={p.slides} />}
+                key={i}
+              />
+            );
+          })}
+          <Route path="/o-mnie" element={<AboutPage />} />
+          <Route path="*" element={<Navigate replace to="/start" />} />
         </Routes>
-        </div>
+      </div>
       <Footer location={location.pathname} />
     </div>
   );
