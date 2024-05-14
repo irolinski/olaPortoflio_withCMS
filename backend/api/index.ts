@@ -24,7 +24,13 @@ const client = new Client(process.env.DATABASE_URL);
 
 app.use(express.json());
 app.use(express.static("public"));
-app.use(cors());
+
+app.use(cors({
+  origin: "https://photoportfolio-cms-demo-nmy4lc8nd-igs-projects-d8fb5f34.vercel.app/"
+}
+))
+app.options('*', cors())
+
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
