@@ -2,9 +2,13 @@ import express from "express";
 import bodyParser from "body-parser";
 import path from "path";
 import fs from "fs";
+import cors from "cors";
 
 const app = express();
-const cors = require("cors");
+
+
+// https://community.render.com/t/error-after-deployment-has-been-blocked-by-cors-policy/6439
+
 
 const { Client } = require("pg");
 require("dotenv").config({
@@ -25,9 +29,8 @@ const client = new Client(process.env.DATABASE_URL);
 app.use(express.json());
 app.use(express.static("public"));
 
-app.use(cors({
-  origin: "https://photoportfolio-cms-demo-nmy4lc8nd-igs-projects-d8fb5f34.vercel.app/"
-}
+app.use(cors(
+  //{ origin: "https://photoportfolio-cms-demo-nmy4lc8nd-igs-projects-d8fb5f34.vercel.app/"}
 ))
 app.options('*', cors())
 
