@@ -23,7 +23,7 @@ export const cinema = {
     name: name,
     slides: slides,
     url: url,
-    imgUrl: imgUrl
+    imgurl: imgUrl
 }
 
 

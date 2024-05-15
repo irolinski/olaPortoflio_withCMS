@@ -20,7 +20,7 @@ export const morocco = {
     name: name,
     slides: slides,
     url: url,
-    imgUrl: imgUrl
+    imgurl: imgUrl
 }
 
 

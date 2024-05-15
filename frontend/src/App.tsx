@@ -24,9 +24,9 @@ export default function App() {
 
 const blankData: any[] | (() => any[]) = []
 
-  let [profileData, setProfileData] = useState<any[]>(blankData);
-  const [slideshowData, setSlideshowData] = useState<any[]>(blankData);
-  const [aboutPageData, setAboutPageData] = useState<any[]>(blankData);
+  // let [profileData, setProfileData] = useState<any[]>(blankData);
+  // const [slideshowData, setSlideshowData] = useState<any[]>(blankData);
+  // const [aboutPageData, setAboutPageData] = useState<any[]>(blankData);
 
 
 
@@ -34,11 +34,11 @@ const blankData: any[] | (() => any[]) = []
 
   useEffect(() => {
     (async () => {
-      const profileAPIRes = await fetch("https://photoportfolio-cms-demo-nmy4lc8nd-igs-projects-d8fb5f34.vercel.app/api/profile")
-      const seriesAPIRes = await fetch("https://photoportfolio-cms-demo-nmy4lc8nd-igs-projects-d8fb5f34.vercel.app/api/series");
-      const profile = await profileAPIRes.json();
+      // const profileAPIRes = await fetch("https://photoportfolio-cms-demo.vercel.app/api/profile");
+      const seriesAPIRes = await fetch("https://photoportfolio-cms-demo.vercel.app/api/series");
+      // const profile = await profileAPIRes.json();
       const series = await seriesAPIRes.json();
-      setSlideshowData(profile[0].slides);
+      // setSlideshowData(profile[0].slides);
       setImageData(series);    
     })();
   }, []);

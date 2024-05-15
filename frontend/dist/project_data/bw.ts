@@ -20,7 +20,7 @@ export const bw = {
     name: name,
     slides: slides,
     url: url,
-    imgUrl: imgUrl
+    imgurl: imgUrl
 }
 
 

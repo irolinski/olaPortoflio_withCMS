@@ -11,7 +11,7 @@ const [slideshowData, setSlideshowData] = useState<any[]>(blankData);
   
 useEffect(() => {
   (async () => {
-    const profileAPIRes = await fetch("http://localhost:3000/api/profile")
+    const profileAPIRes = await fetch("https://photoportfolio-cms-demo.vercel.app/api/profile")
     const profile = await profileAPIRes.json();
     setSlideshowData(profile[0].slides);
   })();
