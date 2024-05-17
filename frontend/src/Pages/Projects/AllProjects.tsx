@@ -13,9 +13,9 @@ export default function AllProjects({ imageData }: dataProp) {
       {imageData.map((p:seriesType, i: number) => {
         return (
           <SeriesCard
-            imageUrl={p.imgurl}
+            imageUrl={p.cover}
             seriesTitle={p.name}
-            seriesUrl={p.url}
+            seriesUrl={p.name.replace(/\s+/g, '-').toLowerCase()}
             key={i}
           />
         );

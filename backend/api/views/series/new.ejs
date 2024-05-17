@@ -1,0 +1,57 @@
+<% layout('layouts/boilerplate') %>
+
+<main class="mt-5">
+  <form class="mx-auto" action="/series" method="POST">
+    <h1>Add a new series</h1>
+    <div class="my-3 py-5 row" id="form-input-div">
+      <div class="col-12 pt-3">
+        <label for="name">Name:</label>
+        <input name="name" type="text" class="form-control" />
+      </div>
+      <div class="col-12 pt-3">
+        <label for="name">Cover photo URL:</label>
+        <input name="cover" type="text" class="form-control" />
+        <div class="form-text">
+          This will be the cover art for this series' block in the series menu
+        </div>
+      </div>
+      <div class="row image-input">
+        <div class="col-10 pt-3">
+          <label for="image_1">Image 1 URL:</label>
+          <input name="image_1" type="url" class="form-control" />
+          <div class="form-text">Here, paste an url to your first image.</div>
+        </div>
+        <div class="col-2 align-content-center">
+          <button
+            class="add-image-input-btn"
+            type="button"
+            onclick="addImageInput()"
+          >
+            +
+          </button>
+        </div>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-outline-primary float-end">
+      Submit
+    </button>
+  </form>
+</main>
+
+<script>
+  const formInputDiv = document.getElementById("form-input-div");
+
+  let inputNum = 2;
+
+  const removeImageInput = () => {
+    let allImageInputs = document.querySelectorAll(".image-input");
+    let lastImageInput = allImageInputs[allImageInputs.length - 1];
+    lastImageInput.remove();
+    inputNum--;
+  };
+
+  const addImageInput = () => {
+    formInputDiv.innerHTML += `<div class="row image-input"><div class="col-10 pt-3"> <label for="image_${inputNum}">Image ${inputNum} URL:</label> <input name="image_${inputNum}" type="url" class="form-control" /> </div> <div class="col-2 align-content-center"> <button type="button" class="add-image-input-btn" onclick="addImageInput()">+</button><button type="button" class="add-image-input-btn" onclick="removeImageInput()">-</button></div></div>`;
+    inputNum++;
+  };
+</script>

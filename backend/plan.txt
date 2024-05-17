@@ -1,0 +1,15 @@
+
+
+login 
+  |
+  v
+menu
+    slideshow
+    series
+        new series
+        :
+            edit
+            delete
+    about me
+    
+
