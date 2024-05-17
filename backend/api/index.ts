@@ -58,10 +58,31 @@ app.get("/series", (req, res) => {
 
 app.post("/series", async (req, res) => {
   const name = req.body.name;
-  const q1 = await client.query({
-    text: `INSERT INTO "series"(name, cover) VALUES (${req.body.name}, ${req.body.cover})`,
+  const cover = req.body.cover;
+
+  let images = req.body;
+  delete images.name;
+  delete images.cover;
+
+  const imgAmount = Object.keys(images).length;
+  const urlArray = Object.values(images);
+
+  let queryText = `WITH inserted_row AS (
+                    INSERT INTO "series" (name, cover) VALUES ('${name}', '${cover}') RETURNING id 
+                  )`;
+
+  let imgs = urlArray.map((i: any) => {
+    return `INSERT INTO "photo" (url, series_id) SELECT '${i}', id 
+    FROM inserted_row; `;
   });
-  const q2 = await client.query({ text: `INSERT INTO` });
+
+  const imagesQuery = imgs.join("");
+
+  queryText += imagesQuery;
+
+  console.log(queryText);
+
+  const q = await client.query({ text: queryText });
 });
 
 app.get("/series/new", (req, res) => {

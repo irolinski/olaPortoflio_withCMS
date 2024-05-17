@@ -27,7 +27,7 @@ export default function App() {
   useEffect(() => {
     (async () => {
       const seriesAPIRes = await fetch(
-        "http://localhost:3000/api/series"
+        "https://photoportfolio-cms-demo.vercel.app/api/series"
       );
       const series = await seriesAPIRes.json();
       setImageData(series);
