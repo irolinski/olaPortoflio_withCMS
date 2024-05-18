@@ -51,7 +51,9 @@
   };
 
   const addImageInput = () => {
-    formInputDiv.innerHTML += `<div class="row image-input"><div class="col-10 pt-3"> <label for="image_${inputNum}">Image ${inputNum} URL:</label> <input name="image_${inputNum}" type="url" class="form-control" /> </div> <div class="col-2 align-content-center"> <button type="button" class="add-image-input-btn" onclick="addImageInput()">+</button><button type="button" class="add-image-input-btn" onclick="removeImageInput()">-</button></div></div>`;
+    // formInputDiv.innerHTML += `<div class="row image-input"><div class="col-10 pt-3"> <label for="image_${inputNum}">Image ${inputNum} URL:</label> <input name="image_${inputNum}" type="url" class="form-control" /> </div> <div class="col-2 align-content-center"> <button type="button" class="add-image-input-btn" onclick="addImageInput()">+</button><button type="button" class="add-image-input-btn" onclick="removeImageInput()">-</button></div></div>`;
+    const imageInput = `<div class="row image-input"><div class="col-10 pt-3"> <label for="image_${inputNum}">Image ${inputNum} URL:</label> <input name="image_${inputNum}" type="url" class="form-control" /> </div> <div class="col-2 align-content-center"> <button type="button" class="add-image-input-btn" onclick="addImageInput()">+</button><button type="button" class="add-image-input-btn" onclick="removeImageInput()">-</button></div></div>`;
+    formInputDiv.insertAdjacentHTML('beforeend', imageInput);
     inputNum++;
   };
 </script>

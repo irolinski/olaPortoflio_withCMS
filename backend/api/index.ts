@@ -53,10 +53,10 @@ app.get("/slideshow", async (req, res, next) => {
 });
 
 app.get("/series", (req, res) => {
-  res.render("series");
+  res.render("series/series");
 });
 
-app.post("/series", async (req, res) => {
+app.post("/series", async (req, res, next) => {
   const name = req.body.name;
   const cover = req.body.cover;
 
@@ -64,25 +64,42 @@ app.post("/series", async (req, res) => {
   delete images.name;
   delete images.cover;
 
-  const imgAmount = Object.keys(images).length;
-  const urlArray = Object.values(images);
+  const imgAmount: number = Object.keys(images).length;
+  const urlArray: string[] = Object.values(images);
 
-  let queryText = `WITH inserted_row AS (
-                    INSERT INTO "series" (name, cover) VALUES ('${name}', '${cover}') RETURNING id 
+  const query_pt1 = `WITH inserted_row AS (
+                    INSERT INTO "series" (name, cover)
+                    VALUES ('${name}', '${cover}') 
+                    RETURNING id 
                   )`;
 
-  let imgs = urlArray.map((i: any) => {
-    return `INSERT INTO "photo" (url, series_id) SELECT '${i}', id 
-    FROM inserted_row; `;
+  const imgeQueries = urlArray.map((imgUrl: string, i) => {
+    if (i + 1 < imgAmount) {
+      return `, photo_insert_${i} AS (
+      INSERT INTO "photo" (url, series_id)
+      SELECT '${imgUrl}', id
+      FROM inserted_row
+      RETURNING id
+    )`;
+    } else {
+      return `
+      INSERT INTO "photo" (url, series_id)
+      SELECT '${imgUrl}', id
+      FROM inserted_row;
+      ;`;
+    }
   });
 
-  const imagesQuery = imgs.join("");
+  const query_pt2 = imgeQueries.join("");
+  const queryText = query_pt1 + query_pt2;
 
-  queryText += imagesQuery;
+  try {
+    const q = await client.query({ text: queryText });
+  } catch (error) {
+    next(error);
+  }
 
-  console.log(queryText);
-
-  const q = await client.query({ text: queryText });
+  res.redirect("series");
 });
 
 app.get("/series/new", (req, res) => {
@@ -118,7 +135,7 @@ app.get("/api/series", async (req, res, next) => {
     );
     res.send(seriesData);
   } catch (error) {
-    next(error); // Pass the error to the error handler middleware
+    next(error); 
   }
 });
 
