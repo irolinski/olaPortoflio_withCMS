@@ -1,5 +1,23 @@
 <% layout('layouts/boilerplate') %>
 
-<main>
-this is series page
-</main>
+<div class="container mx-auto col-10 px-12">
+  <main class="mt-5">
+    <h1>All series</h1>
+    <div class="d-flex mt-5 mx-5 justify-content-end">
+      <a href="/series/new" class="btn btn-primary float-end">Add new series</a>
+    </div>
+    <div class="my-3 py-5 row justify-content-center">
+      <% allSeries.map((s) => { %>
+      <div class="card my-5 mx-4" style="width: 18rem">
+        <img class="card-img-top mt-3" src="<%=s.cover%>" />
+        <div class="card-body text-align-center">
+          <h5 class="card-title text-center"><%=s.name%></h5>
+          <a href="/series/<%=s.id%>/edit" class="btn btn-warning">Edit</a>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+  </main>
+</div>
+
+<script></script>

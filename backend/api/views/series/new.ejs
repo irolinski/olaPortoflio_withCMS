@@ -1,6 +1,6 @@
 <% layout('layouts/boilerplate') %>
-
-<main class="mt-5">
+<div class="container mx-auto col-10 col-md-6 px-12">
+<main class="mt-5 ">
   <form class="mx-auto" action="/series" method="POST">
     <h1>Add a new series</h1>
     <div class="my-3 py-5 row" id="form-input-div">
@@ -37,7 +37,7 @@
     </button>
   </form>
 </main>
-
+</div>
 <script>
   const formInputDiv = document.getElementById("form-input-div");
 

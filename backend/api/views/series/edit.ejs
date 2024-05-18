@@ -1,5 +1,77 @@
 <% layout('layouts/boilerplate') %>
 
-<main>
-this is edit series page
-</main>
+<div class="container mx-auto col-10 col-md-6 px-12">
+  <main class="mt-5">
+    <form class="mx-auto" action="/series" method="POST">
+      <h1>Add a new series</h1>
+      <div class="my-3 py-5 row" id="form-input-div">
+        <div class="col-12 pt-3">
+          <label for="name">Name:</label>
+          <input
+            name="name"
+            type="text"
+            class="form-control"
+            value="<%=series.name%>"
+          />
+        </div>
+        <div class="col-12 pt-3">
+          <label for="name">Cover photo URL:</label>
+          <input
+            name="cover"
+            type="text"
+            class="form-control"
+            value="<%=series.cover%>"
+          />
+          <div class="form-text">
+            This will be the cover art for this series' block in the series menu
+          </div>
+        </div>
+        <% photos.map((ph, i) => { %>
+            <div class="row image-input">
+              <div class="col-10 pt-3">
+                <label for="image_${inputNum}">Image <%=i + 1%> URL:</label>
+                <input name="image_${inputNum}" type="url" class="form-control" value="<%=ph.url%>"/>
+              </div>
+              <div class="col-2 align-content-center">
+                <button
+                  type="button"
+                  class="add-image-input-btn"
+                  onclick="addImageInput()"
+                >
+                  +</button
+                ><button
+                  type="button"
+                  class="add-image-input-btn"
+                  onclick="removeImageInput()"
+                >
+                  -
+                </button>
+              </div>
+            </div>
+            <% }) %>
+      </div>
+      <button type="submit" class="btn btn-outline-primary float-end">
+        Submit
+      </button>
+    </form>
+  </main>
+</div>
+<script>
+  const formInputDiv = document.getElementById("form-input-div");
+
+  console.log(document.querySelectorAll(".image-input").length)
+  let inputNum = document.querySelectorAll(".image-input").length + 1;
+
+  const removeImageInput = () => {
+    let allImageInputs = document.querySelectorAll(".image-input");
+    let lastImageInput = allImageInputs[allImageInputs.length - 1];
+    lastImageInput.remove();
+    inputNum--;
+  };
+
+  const addImageInput = () => {
+    const imageInput = `<div class="row image-input"><div class="col-10 pt-3"> <label for="image_${inputNum}">Image ${inputNum} URL:</label> <input name="image_${inputNum}" type="url" class="form-control" /> </div> <div class="col-2 align-content-center"> <button type="button" class="add-image-input-btn" onclick="addImageInput()">+</button><button type="button" class="add-image-input-btn" onclick="removeImageInput()">-</button></div></div>`;
+    formInputDiv.insertAdjacentHTML("beforeend", imageInput);
+    inputNum++;
+  };
+</script>

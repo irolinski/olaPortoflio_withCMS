@@ -52,8 +52,15 @@ app.get("/slideshow", async (req, res, next) => {
   res.render("slideshow");
 });
 
-app.get("/series", (req, res) => {
-  res.render("series/series");
+app.get("/series", async (req, res, next) => {
+  try {
+    let allSeries = await client.query({ text: `SELECT * FROM "series";` });
+    allSeries = allSeries.rows;
+    console.log(allSeries);
+    res.render("series/series", { allSeries });
+  } catch (error) {
+    next(error);
+  }
 });
 
 app.post("/series", async (req, res, next) => {
@@ -106,8 +113,21 @@ app.get("/series/new", (req, res) => {
   res.render("series/new");
 });
 
-app.get("/series/:id/edit", (req, res) => {
-  res.render("series/series");
+// now on to adding actual editing; 
+app.get("/series/:id/edit", async (req, res, next) => {
+  const { id } = req.params;
+  let series = await client.query({
+    text: `SELECT * FROM "series" WHERE id='${id}';`,
+  });
+  series = series.rows[0];
+
+  let photos = await client.query({
+    text: `SELECT * FROM "photo" WHERE series_id='${id}'`,
+  });
+  photos = photos.rows;
+  console.log(photos);
+
+  res.render("series/edit", { series, photos });
 });
 
 app.get("/about-me", async (req, res, next) => {
@@ -135,7 +155,7 @@ app.get("/api/series", async (req, res, next) => {
     );
     res.send(seriesData);
   } catch (error) {
-    next(error); 
+    next(error);
   }
 });
 
