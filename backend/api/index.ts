@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import path from "path";
 import fs from "fs";
 import cors from "cors";
+import methodOverride from "method-override";
 
 const app = express();
 
@@ -36,6 +37,7 @@ app.set("view engine", "ejs");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/public", express.static("public"));
+app.use(methodOverride("_method"));
 
 // cors settings
 
@@ -56,7 +58,6 @@ app.get("/series", async (req, res, next) => {
   try {
     let allSeries = await client.query({ text: `SELECT * FROM "series";` });
     allSeries = allSeries.rows;
-    console.log(allSeries);
     res.render("series/series", { allSeries });
   } catch (error) {
     next(error);
@@ -113,7 +114,7 @@ app.get("/series/new", (req, res) => {
   res.render("series/new");
 });
 
-// now on to adding actual editing; 
+// now on to adding actual editing;
 app.get("/series/:id/edit", async (req, res, next) => {
   const { id } = req.params;
   let series = await client.query({
@@ -125,9 +126,50 @@ app.get("/series/:id/edit", async (req, res, next) => {
     text: `SELECT * FROM "photo" WHERE series_id='${id}'`,
   });
   photos = photos.rows;
-  console.log(photos);
 
   res.render("series/edit", { series, photos });
+});
+
+app.put("/series/:id", async (req, res, next) => {
+  const name = req.body.name;
+  const cover = req.body.cover;
+  const id = path.basename(req.path);
+
+  let images = req.body;
+  delete images.name;
+  delete images.cover;
+
+  const imgAmount: number = Object.keys(images).length;
+  const urlArray: string[] = Object.values(images);
+
+  console.log(urlArray);
+
+  const query_pt1 = `UPDATE "series"
+    SET 
+    name = '${name}',
+    cover = '${cover}'
+    WHERE id = '${id}';
+
+    DELETE FROM "photo"
+    WHERE
+    series_id = '${id}';
+`;
+
+  const imgQueries = urlArray.map((imgUrl: string, i) => {
+      return `INSERT INTO "photo" (url, series_id)
+      VALUES ('${imgUrl}', '${id}') ; `;
+  });
+
+  const query_pt2 = imgQueries.join("");
+  const queryText = query_pt1 + query_pt2;
+  
+  try {
+    const q = await client.query({ text: queryText });
+  } catch (error) {
+    next(error);
+  }
+
+  res.redirect("/series");
 });
 
 app.get("/about-me", async (req, res, next) => {
