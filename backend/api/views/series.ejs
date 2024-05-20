@@ -2,11 +2,14 @@
 
 <div class="container mx-auto col-10 px-12">
   <main class="mt-5">
-    <h1>All series</h1>
+    <h1>Minimalistic portfolio CMS</h1>
     <div class="d-flex mt-5 mx-5 justify-content-end">
-      <a href="/series/new" class="btn btn-primary float-end">Add new series</a>
+      <a href="/slideshow" class="btn btn-warning m-2 float-end">Edit slideshow</a>
+      <a href="/series/new" class="btn btn-primary m-2 float-end">Add new series</a>
     </div>
     <div class="my-3 py-5 row justify-content-center">
+      <h2>Series:</h2>
+
       <% allSeries.map((s) => { %>
       <div class="card my-5 mx-4" style="width: 18rem">
         <img class="card-img-top mt-3" src="<%=s.cover%>" />

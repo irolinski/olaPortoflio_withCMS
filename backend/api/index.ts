@@ -46,8 +46,18 @@ app.options("*", cors());
 
 // routes
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
+app.get("/", (req, res, next) => {
+  res.redirect("/menu");
+}) 
+
+app.get("/menu", async (req, res, next) => {
+  try {
+    let allSeries = await client.query({ text: `SELECT * FROM "series";` });
+    allSeries = allSeries.rows;
+    res.render("series", { allSeries });
+  } catch (error) {
+    next(error);
+  }
 });
 
 app.get("/slideshow", async (req, res, next) => {
@@ -76,18 +86,9 @@ app.put("/slideshow", async (req, res, next) => {
   } catch (error) {
     next(error);
   }
-  res.redirect("series");
+  res.redirect("/menu");
 });
 
-app.get("/series", async (req, res, next) => {
-  try {
-    let allSeries = await client.query({ text: `SELECT * FROM "series";` });
-    allSeries = allSeries.rows;
-    res.render("series/series", { allSeries });
-  } catch (error) {
-    next(error);
-  }
-});
 
 app.post("/series", async (req, res, next) => {
   const name = req.body.name;
@@ -132,7 +133,7 @@ app.post("/series", async (req, res, next) => {
     next(error);
   }
 
-  res.redirect("series");
+  res.redirect("/menu");
 });
 
 app.get("/series/new", (req, res) => {
@@ -192,7 +193,7 @@ app.put("/series/:id", async (req, res, next) => {
     next(error);
   }
 
-  res.redirect("/series");
+  res.redirect("/menu");
 });
 
 app.delete("/series/:id", async (req, res, next) => {
@@ -207,7 +208,7 @@ app.delete("/series/:id", async (req, res, next) => {
     next(error);
   }
 
-  res.redirect("/series");
+  res.redirect("/menu");
 });
 
 app.get("/about-me", async (req, res, next) => {
