@@ -51,6 +51,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/slideshow", async (req, res, next) => {
+  const slide = await client.query;
   res.render("slideshow");
 });
 
@@ -216,9 +217,19 @@ app.get("/api/series", async (req, res, next) => {
   }
 });
 
-app.get("/api/profile", async (req, res, next) => {
-  const q = await client.query({ text: `SELECT * FROM PROFILE` });
-  res.send(JSON.stringify(q.rows));
+// app.get("/api/profile", async (req, res, next) => {
+//   const q = await client.query({ text: `SELECT * FROM PROFILE` });
+//   res.send(JSON.stringify(q.rows));
+// });
+
+app.get("/api/slideshow", async (req, res, next) => {
+  const q = await client.query({ text: `SELECT * FROM "slideshow"` });
+
+  const slideArray = q.rows.map((obj: any) => {
+    return obj.slide_url;
+  });
+
+  res.send(JSON.stringify(slideArray));
 });
 
 app.listen(3000, () =>

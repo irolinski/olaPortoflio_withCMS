@@ -1,24 +1,23 @@
 import { useEffect, useState } from "react";
 // import { slides } from "../../../public/project_data/start_slides.ts";
 
-
-
 export default function StartPage() {
+  const blankData: any[] | (() => any[]) = [];
 
-  const blankData: any[] | (() => any[]) = []
+  const [slideshowData, setSlideshowData] = useState<any[]>(blankData);
 
-const [slideshowData, setSlideshowData] = useState<any[]>(blankData);
-  
-useEffect(() => {
-  (async () => {
-    const profileAPIRes = await fetch("https://photoportfolio-cms-demo.vercel.app/api/profile")
-    const profile = await profileAPIRes.json();
-    setSlideshowData(profile[0].slides);
-  })();
-}, []);
+  useEffect(() => {
+    (async () => {
+      const slideshowAPIRes = await fetch(
+        "http://localhost:3000/api/slideshow"
+      );
+      const slideshow = await slideshowAPIRes.json();
+      console.log(slideshow);
+      setSlideshowData(slideshow);
+    })();
+  }, []);
 
-let slides = slideshowData;
-
+  let slides = slideshowData;
 
   const [image, setImage] = useState(slides[0]);
   const [slideOpacity, setSlideOpacity] = useState(1);
@@ -42,12 +41,12 @@ let slides = slideshowData;
       className="flex flex-wrap mx-auto justify-around sm:p-16 mb-36 mt-24 sm:mt-0 sm:mb-8 md:mb-0 lg:mb-8 lg:pt-[12.5vh] xl:flex-nowrap xl:py-[20vh]"
       onLoad={() => {
         if (!showStarted) {
-          slide()
-          setShowStarted(1)
+          slide();
+          setShowStarted(1);
         } else {
           setTimeout(() => {
             slide();
-          }, 7000)
+          }, 7000);
         }
       }}
     >
