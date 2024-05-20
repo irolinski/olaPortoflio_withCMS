@@ -156,13 +156,28 @@ app.put("/series/:id", async (req, res, next) => {
 `;
 
   const imgQueries = urlArray.map((imgUrl: string, i) => {
-      return `INSERT INTO "photo" (url, series_id)
+    return `INSERT INTO "photo" (url, series_id)
       VALUES ('${imgUrl}', '${id}') ; `;
   });
 
   const query_pt2 = imgQueries.join("");
   const queryText = query_pt1 + query_pt2;
-  
+
+  try {
+    const q = await client.query({ text: queryText });
+  } catch (error) {
+    next(error);
+  }
+
+  res.redirect("/series");
+});
+
+app.delete("/series/:id", async (req, res, next) => {
+  const id = path.basename(req.path);
+
+  const queryText = `DELETE FROM "photo" WHERE series_id = '${id}';
+  DELETE FROM "series" WHERE id='${id}';`;
+
   try {
     const q = await client.query({ text: queryText });
   } catch (error) {

@@ -3,7 +3,8 @@
 <div class="container mx-auto col-10 col-md-6 px-12">
   <main class="mt-5">
     <h1>Edit series</h1>
-    <form class="mx-auto" action="/series/<%=series.id%>?_method=PUT" method="POST">
+    <div class="mx-auto">
+    <form action="/series/<%=series.id%>?_method=PUT" id="edit-form" method="POST">
       <div class="my-3 py-5 row" id="form-input-div">
         <div class="col-12 pt-3">
           <label for="name">Name:</label>
@@ -55,12 +56,22 @@
         </div>
         <% }) %>
       </div>
-      <button type="submit" class="btn btn-outline-primary float-end">
+
+    </form>
+    <form action="/series/<%=series.id%>?_method=DELETE" id="delete-form" method="POST"></form> 
+    <div class="mx-auto">
+        <button type="submit" form="delete-form" class="btn btn-outline-danger float-start"
+        onclick="return confirm('Are you sure you want to remove this from your portfolio? There will be no coming back!')">
+        Remove
+      </button>
+      <button type="submit" form="edit-form" class="btn btn-outline-primary float-end">
         Submit
       </button>
-    </form>
+    </div>
+    <div>
   </main>
 </div>
+
 <script>
   const formInputDiv = document.getElementById("form-input-div");
 
