@@ -90,4 +90,10 @@
     formInputDiv.insertAdjacentHTML("beforeend", imageInput);
     inputNum++;
   };
+
+  window.onload = (evt) => {
+    if (!document.querySelector(".image-input")) {
+        addImageInput();
+    }
+  }
 </script>

@@ -26,8 +26,8 @@ const client = new Client(process.env.DATABASE_URL);
 })();
 
 // ejs set-up
-const ejsMate = require("ejs-mate");
 
+const ejsMate = require("ejs-mate");
 app.set("views", path.join(__dirname, "views"));
 app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
@@ -51,8 +51,32 @@ app.get("/", (req, res) => {
 });
 
 app.get("/slideshow", async (req, res, next) => {
-  const slide = await client.query;
-  res.render("slideshow");
+  const q = await client.query({ text: `SELECT * FROM "slideshow"` });
+  const slides = q.rows;
+  res.render("slideshow", { slides });
+});
+
+app.put("/slideshow", async (req, res, next) => {
+  const images = req.body;
+  const urlArray: string[] = Object.values(images);
+  const imgAmount = Object.keys(urlArray).length;
+
+  const query_pt1 = `DELETE FROM "slideshow"; `;
+
+  const imgQueries = urlArray.map((imgUrl: string) => {
+    return `INSERT INTO "slideshow" (slide_url)
+      VALUES ('${imgUrl}'); `;
+  });
+
+  const query_pt2 = imgQueries.join("");
+  const queryText = query_pt1 + query_pt2;
+
+  try {
+    const q = await client.query({ text: queryText });
+  } catch (error) {
+    next(error);
+  }
+  res.redirect("series");
 });
 
 app.get("/series", async (req, res, next) => {
@@ -77,12 +101,12 @@ app.post("/series", async (req, res, next) => {
   const urlArray: string[] = Object.values(images);
 
   const query_pt1 = `WITH inserted_row AS (
-                    INSERT INTO "series" (name, cover)
-                    VALUES ('${name}', '${cover}') 
-                    RETURNING id 
-                  )`;
+  INSERT INTO "series" (name, cover)
+  VALUES ('${name}', '${cover}') 
+  RETURNING id 
+  )`;
 
-  const imgeQueries = urlArray.map((imgUrl: string, i) => {
+  const imgeQueries = urlArray.map((imgUrl: string, i: number) => {
     if (i + 1 < imgAmount) {
       return `, photo_insert_${i} AS (
       INSERT INTO "photo" (url, series_id)
@@ -143,20 +167,18 @@ app.put("/series/:id", async (req, res, next) => {
   const imgAmount: number = Object.keys(images).length;
   const urlArray: string[] = Object.values(images);
 
-  console.log(urlArray);
-
   const query_pt1 = `UPDATE "series"
-    SET 
-    name = '${name}',
-    cover = '${cover}'
-    WHERE id = '${id}';
+  SET 
+  name = '${name}',
+  cover = '${cover}'
+  WHERE id = '${id}';
 
-    DELETE FROM "photo"
-    WHERE
-    series_id = '${id}';
-`;
+  DELETE FROM "photo"
+  WHERE
+  series_id = '${id}';
+  `;
 
-  const imgQueries = urlArray.map((imgUrl: string, i) => {
+  const imgQueries = urlArray.map((imgUrl: string, i: number) => {
     return `INSERT INTO "photo" (url, series_id)
       VALUES ('${imgUrl}', '${id}') ; `;
   });
@@ -201,7 +223,7 @@ app.get("/api/series", async (req, res, next) => {
       q.rows.map(async (r: { id: number; slides: string[] }) => {
         const urlArray: string[] = [];
         const p = await client.query({
-          text: `select * from "photo" where series_id = $1`,
+          text: `SELECT * FROM "photo" WHERE series_id = $1`,
           values: [r.id],
         });
         p.rows.map((u: { url: string }) => {
@@ -224,11 +246,9 @@ app.get("/api/series", async (req, res, next) => {
 
 app.get("/api/slideshow", async (req, res, next) => {
   const q = await client.query({ text: `SELECT * FROM "slideshow"` });
-
   const slideArray = q.rows.map((obj: any) => {
     return obj.slide_url;
   });
-
   res.send(JSON.stringify(slideArray));
 });
 
