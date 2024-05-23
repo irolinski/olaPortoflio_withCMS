@@ -212,7 +212,10 @@ app.delete("/series/:id", async (req, res, next) => {
 });
 
 app.get("/about-me", async (req, res, next) => {
-  res.render("series/about-me");
+
+  const q = await client.query({ text: `SELECT * FROM "profile" WHERE role = 'client'` });
+  console.log(q.rows[0]);
+  res.render("about-me");
 });
 
 // api w/ json for the front-end
@@ -253,6 +256,11 @@ app.get("/api/slideshow", async (req, res, next) => {
   res.send(JSON.stringify(slideArray));
 });
 
+app.get("/api/about-me", async (req, res, next) => {
+  const q = await client.query({ text: `SELECT * FROM "profile" WHERE role = 'client' ` });
+  const profileArray = q.rows[0];
+  res.send(JSON.stringify(profileArray));
+})
 app.listen(3000, () =>
   console.log("🚀 Server ready at: http://localhost:3000")
 );
