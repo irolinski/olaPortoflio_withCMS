@@ -2,6 +2,7 @@
 
 api
 front-end validation
+  make text area stop adding spaces towards the end of the string
 front-end touch-ups
 back-end validation + error handling
 authorization 

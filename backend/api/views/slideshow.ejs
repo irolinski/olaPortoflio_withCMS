@@ -4,7 +4,7 @@
   <main class="mt-5">
     <h1>Slideshow</h1>
     <div class="mx-auto">
-    <form action="/slideshow?_method=PUT" id="slideshow-form" method="POST">
+    <form action="/slideshow?_method=PUT" class="needs-validation" id="slideshow-form" method="POST" novalidate>
         <div class="my-3 py-5 row" id="form-input-div">
         <% slides.map((s, i) => { %>
         <div class="row image-input">
@@ -13,11 +13,12 @@
             <input
               name="slide_<%=i%>"
               type="url"
-              class="form-control"
+              class="form-control needs-validation"
               value="<%=s.slide_url%>"
+              required
             />
           </div>
-          <div class="col-2 align-content-center">
+          <div class="col-2 align-content-center img-btn-div">
             <button
               type="button"
               class="add-image-input-btn"
@@ -26,7 +27,7 @@
               +</button
             ><button
               type="button"
-              class="add-image-input-btn"
+              class="rm-image-input-btn"
               onclick="removeImageInput()"
             >
               -
@@ -52,14 +53,14 @@
   let inputNum = document.querySelectorAll(".image-input").length + 1;
 
   const removeImageInput = () => {
-    let allImageInputs = document.querySelectorAll(".image-input");
+    const allImageInputs = document.querySelectorAll(".image-input");
     let lastImageInput = allImageInputs[allImageInputs.length - 1];
     lastImageInput.remove();
     inputNum--;
   };
 
   const addImageInput = () => {
-    const imageInput = `<div class="row image-input"><div class="col-10 pt-3"> <label for="slide_${inputNum}">Image ${inputNum} URL:</label> <input name="slide_${inputNum}" type="url" class="form-control" /> </div> <div class="col-2 align-content-center"> <button type="button" class="add-image-input-btn" onclick="addImageInput()">+</button><button type="button" class="add-image-input-btn" onclick="removeImageInput()">-</button></div></div>`;
+    const imageInput = `<div class="row image-input"><div class="col-10 pt-3"> <label for="slide_${inputNum}">Image ${inputNum} URL:</label> <input name="slide_${inputNum}" type="url" class="form-control needs-validation" required /> </div> <div class="col-2 align-content-center img-btn-div"> <button type="button" class="add-image-input-btn" onclick="addImageInput()">+</button><button type="button" class="rm-image-input-btn" onclick="removeImageInput()">-</button></div></div>`;
     formInputDiv.insertAdjacentHTML("beforeend", imageInput);
     inputNum++;
   };
@@ -69,4 +70,24 @@
         addImageInput();
     }
   }
+</script>
+
+<script>
+  (() => {
+  'use strict'
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  const forms = document.querySelectorAll('.needs-validation')
+
+  // Loop over them and prevent submission
+  Array.from(forms).forEach(form => {
+    form.addEventListener('submit', event => {
+      if (!form.checkValidity()) {
+        event.preventDefault()
+        event.stopPropagation()
+      }
+      form.classList.add('was-validated')
+    }, false)
+  })
+})()
 </script>

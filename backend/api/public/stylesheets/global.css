@@ -1,3 +1,10 @@
+.img-btn-div{
+    display: none;
+}
 
-/* new series */
+.image-input:last-child .img-btn-div{
+display: block;
+}
 
+.image-input:first-child {
+background-color: red;}
