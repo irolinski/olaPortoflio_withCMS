@@ -48,7 +48,7 @@ app.options("*", cors());
 
 app.get("/", (req, res, next) => {
   res.redirect("/menu");
-}) 
+});
 
 app.get("/menu", async (req, res, next) => {
   try {
@@ -88,7 +88,6 @@ app.put("/slideshow", async (req, res, next) => {
   }
   res.redirect("/menu");
 });
-
 
 app.post("/series", async (req, res, next) => {
   const name = req.body.name;
@@ -212,11 +211,26 @@ app.delete("/series/:id", async (req, res, next) => {
 });
 
 app.get("/about-me", async (req, res, next) => {
+  let abt = await client.query({
+    text: `SELECT * FROM "profile" WHERE role = 'client'`,
+  });
 
-  const q = await client.query({ text: `SELECT * FROM "profile" WHERE role = 'client'` });
-  console.log(q.rows[0]);
-  res.render("about-me");
+  abt = abt.rows[0];
+  // console.log(abtData.rows[0])
+    res.render("about-me", {abt});
 });
+
+app.put("/about-me", async (req, res, next) => {
+  const { profile_picture_url, description, phone_num, e_mail } = req.body;
+  const queryText = 
+  `UPDATE "profile" SET profile_picture_url = '${profile_picture_url}', description = '${description}', phone_num = '${phone_num}', e_mail = '${e_mail}' WHERE role = 'client';`;
+  const q = await client.query({ text: queryText });
+
+  console.log(JSON.stringify(description))
+  console.log(description);
+  //debug the problem with "" in description 
+  res.redirect("/menu");
+})
 
 // api w/ json for the front-end
 
@@ -243,11 +257,6 @@ app.get("/api/series", async (req, res, next) => {
   }
 });
 
-// app.get("/api/profile", async (req, res, next) => {
-//   const q = await client.query({ text: `SELECT * FROM PROFILE` });
-//   res.send(JSON.stringify(q.rows));
-// });
-
 app.get("/api/slideshow", async (req, res, next) => {
   const q = await client.query({ text: `SELECT * FROM "slideshow"` });
   const slideArray = q.rows.map((obj: any) => {
@@ -257,10 +266,12 @@ app.get("/api/slideshow", async (req, res, next) => {
 });
 
 app.get("/api/about-me", async (req, res, next) => {
-  const q = await client.query({ text: `SELECT * FROM "profile" WHERE role = 'client' ` });
+  const q = await client.query({
+    text: `SELECT * FROM "profile" WHERE role = 'client' `,
+  });
   const profileArray = q.rows[0];
   res.send(JSON.stringify(profileArray));
-})
+});
 app.listen(3000, () =>
   console.log("🚀 Server ready at: http://localhost:3000")
 );

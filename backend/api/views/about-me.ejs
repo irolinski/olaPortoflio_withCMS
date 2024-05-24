@@ -1,5 +1,76 @@
 <% layout('layouts/boilerplate') %>
 
-<main>
-this is about me page
-</main>
+<!-- role: string,
+profile_picture_url: string,
+description: string,
+phone_num: string,
+e_mail: string,
+instagram_url: string -->
+
+<div class="container mx-auto col-10 col-md-6 px-12">
+  <main class="mt-5">
+    <h1>About me</h1>
+    <div class="mx-auto">
+      <form action="/about-me?_method=PUT" id="about_me-form" method="POST">
+        <div class="my-3 py-5 row" id="form-input-div">
+          <div class="col-12 pt-3">
+            <label for="profile_picture_url">Profile picture URL:</label>
+            <input
+              name="profile_picture_url"
+              type="url"
+              class="form-control"
+              value="<%=abt.profile_picture_url%>"
+            />
+          </div>
+          <div class="col-12 pt-3">
+            <label for="description">Description:</label>
+            <textarea
+              rows="8"
+              cols="25"
+              name="description"
+              class="form-control"
+              type="text"
+              rows="4"
+              cols="25"
+            ><%=abt.description%>
+            </textarea>
+            <div class="form-text">
+              This will be the description visible on your 'about me' page. It
+              would be good if it was short and concise. It will look good if
+              there are double line breaks in between sentences.
+            </div>
+          </div>
+          <div class="row col-12 pt-3">
+            <div class="col-6">
+              <label for="phone_num">Phone number:</label>
+              <input
+                name="phone_num"
+                class="form-control"
+                type="tel"
+                value="<%=abt.phone_num%>"
+              />
+            </div>
+            <div class="col-6">
+              <label for="e_mail">Contact e-mail:</label>
+              <input
+                name="e_mail"
+                class="form-control"
+                type="email"
+                value="<%=abt.e_mail%>"
+              />
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="mx-auto">
+        <button
+          type="submit"
+          form="about_me-form"
+          class="btn btn-outline-primary float-end"
+        >
+          Submit
+        </button>
+      </div>
+    </div>
+  </main>
+</div>
