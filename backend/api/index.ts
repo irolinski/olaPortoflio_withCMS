@@ -101,8 +101,8 @@ app.post("/series", async (req, res, next) => {
   const urlArray: string[] = Object.values(images);
 
   const query_pt1 = `WITH inserted_row AS (
-  INSERT INTO "series" (name, cover)
-  VALUES ('${name}', '${cover}') 
+  INSERT INTO "series" (name, cover, sequence)
+  VALUES ('${name}', '${cover}', nextval('series_order') )
   RETURNING id 
   )`;
 

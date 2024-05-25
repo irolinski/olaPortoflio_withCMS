@@ -9,6 +9,7 @@ authorization
 
 main
 loading util data is fetched
+hide instagram & phone & mail if no data fetched
 
 login 
   |
