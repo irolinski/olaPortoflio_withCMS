@@ -90,7 +90,11 @@ app.put("/slideshow", async (req, res, next) => {
 });
 
 app.post("/series", async (req, res, next) => {
-  const name = req.body.name;
+  let name = req.body.name;
+  if (name.includes(`'`)) {
+    name = name.replaceAll(`'`, `''`);
+  }
+
   const cover = req.body.cover;
 
   let images = req.body;
@@ -156,13 +160,17 @@ app.get("/series/:id/edit", async (req, res, next) => {
 });
 
 app.put("/series/:id", async (req, res, next) => {
-  const name = req.body.name;
+  let name = req.body.name;
+  if (name.includes(`'`)) {
+    name = name.replaceAll(`'`, `''`);
+  }
   const cover = req.body.cover;
   const id = path.basename(req.path);
 
   let images = req.body;
   delete images.name;
   delete images.cover;
+  delete images.sequence;
 
   const imgAmount: number = Object.keys(images).length;
   const urlArray: string[] = Object.values(images);
@@ -219,7 +227,9 @@ app.get("/about-me", async (req, res, next) => {
 });
 
 app.put("/about-me", async (req, res, next) => {
-  const { profile_picture_url, description, phone_num, e_mail } = req.body;
+  const { profile_picture_url, phone_num, e_mail } = req.body;
+  let { description } = req.body
+  if (description.includes(`'`)) { description = description.replaceAll(`'`, `''`) };
   const queryText = `UPDATE "profile" SET profile_picture_url = '${profile_picture_url}', description = '${description}', phone_num = '${phone_num}', e_mail = '${e_mail}' WHERE role = 'client';`;
   try {
     const q = await client.query({ text: queryText });
