@@ -3,15 +3,16 @@
   <div class="mt-5">
     <div class="my-3 py-5 ">
       <h2>Series:</h2>
+      <div class="d-flex my-5 mx-5 justify-content-end">
       <button type="submit" class="btn btn-outline-primary float-end" form="order-form" >Set order</button>
-
       <form action="/series/order?_method=PUT" id="order-form" method="POST" novalidate>
-        <input name="orderedIds" id="order-input" readonly >
+        <input name="orderedIds" type="hidden" id="order-input" readonly >
       </form>
+      </div>
       <ul class="row justify-content-center" id="series-order-list">
         <% allSeries.map((s) => { %>
         <li
-          class="card py-5 px-4"
+          class="card py-5 px-4 m-4"
           style="width: 18rem"
         >
         <input type="hidden" id="series-id" value="<%=s.id%>" readonly />
