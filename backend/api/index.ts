@@ -52,7 +52,7 @@ app.get("/", (req, res, next) => {
 
 app.get("/menu", async (req, res, next) => {
   try {
-    let allSeries = await client.query({ text: `SELECT * FROM "series";` });
+    let allSeries = await client.query({ text: `SELECT * FROM "series" ORDER BY sequence;` });
     allSeries = allSeries.rows;
     res.render("series", { allSeries });
   } catch (error) {
@@ -143,20 +143,29 @@ app.get("/series/new", (req, res) => {
   res.render("series/new");
 });
 
-// now on to adding actual editing;
-app.get("/series/:id/edit", async (req, res, next) => {
-  const { id } = req.params;
-  let series = await client.query({
-    text: `SELECT * FROM "series" WHERE id='${id}';`,
-  });
-  series = series.rows[0];
+app.get("/series/order", async (req, res, next) => {
+  try {
+    let allSeries = await client.query({ text: `SELECT * FROM "series" ORDER BY sequence;` });
+    allSeries = allSeries.rows;
+    res.render("series/order", { allSeries });
+  } catch (error) {
+    next(error);
+  }
+});
 
-  let photos = await client.query({
-    text: `SELECT * FROM "photo" WHERE series_id='${id}'`,
-  });
-  photos = photos.rows;
-
-  res.render("series/edit", { series, photos });
+app.put("/series/order", async (req, res, next) => {
+  const orderedIds = req.body.orderedIds.split(`,`);
+  const queryText = orderedIds
+    .map((id: number, o: number) => {
+      return `UPDATE "series" SET sequence = ${o + 1} WHERE id = '${id}'; `;
+    })
+    .join("");
+  try {
+    const q = await client.query({ text: queryText });
+    res.redirect("/menu");
+  } catch (error) {
+    next(error);
+  }
 });
 
 app.put("/series/:id", async (req, res, next) => {
@@ -203,6 +212,21 @@ app.put("/series/:id", async (req, res, next) => {
   res.redirect("/menu");
 });
 
+app.get("/series/:id/edit", async (req, res, next) => {
+  const { id } = req.params;
+  let series = await client.query({
+    text: `SELECT * FROM "series" WHERE id='${id}';`,
+  });
+  series = series.rows[0];
+
+  let photos = await client.query({
+    text: `SELECT * FROM "photo" WHERE series_id='${id}'`,
+  });
+  photos = photos.rows;
+
+  res.render("series/edit", { series, photos });
+});
+
 app.delete("/series/:id", async (req, res, next) => {
   const id = path.basename(req.path);
 
@@ -228,8 +252,10 @@ app.get("/about-me", async (req, res, next) => {
 
 app.put("/about-me", async (req, res, next) => {
   const { profile_picture_url, phone_num, e_mail } = req.body;
-  let { description } = req.body
-  if (description.includes(`'`)) { description = description.replaceAll(`'`, `''`) };
+  let { description } = req.body;
+  if (description.includes(`'`)) {
+    description = description.replaceAll(`'`, `''`);
+  }
   const queryText = `UPDATE "profile" SET profile_picture_url = '${profile_picture_url}', description = '${description}', phone_num = '${phone_num}', e_mail = '${e_mail}' WHERE role = 'client';`;
   try {
     const q = await client.query({ text: queryText });
@@ -241,11 +267,11 @@ app.put("/about-me", async (req, res, next) => {
   }
 });
 
-// api w/ json for the front-end
+// apis w/ json for the front-end
 
 app.get("/api/series", async (req, res, next) => {
   try {
-    const q = await client.query({ text: `SELECT * FROM "series";` });
+    const q = await client.query({ text: `SELECT * FROM "series" ORDER BY sequence;` });
     const seriesData: object[] = await Promise.all(
       q.rows.map(async (r: { id: number; slides: string[] }) => {
         const urlArray: string[] = [];

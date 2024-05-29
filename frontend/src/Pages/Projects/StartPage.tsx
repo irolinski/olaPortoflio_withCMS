@@ -9,7 +9,7 @@ export default function StartPage() {
   useEffect(() => {
     (async () => {
       const slideshowAPIRes = await fetch(
-        "http://localhost:3000/api/slideshow"
+        "https://photoportfolio-cms-demo.vercel.app/api/slideshow"
       );
       const slideshow = await slideshowAPIRes.json();
       console.log(slideshow);

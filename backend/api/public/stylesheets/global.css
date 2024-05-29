@@ -8,3 +8,11 @@ display: block;
 
 .image-input:first-child {
 background-color: red;}
+
+/* #series-order-list li{
+    transition: background-color 1s;
+} */
+
+#series-order-list div.active {
+    background-color:#325de4;
+}

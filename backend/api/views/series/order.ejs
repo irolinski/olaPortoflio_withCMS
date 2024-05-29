@@ -1,0 +1,110 @@
+<% layout('layouts/boilerplate') %>
+<div class="container mx-auto col-10 px-12">
+  <div class="mt-5">
+    <div class="my-3 py-5 ">
+      <h2>Series:</h2>
+      <button type="submit" class="btn btn-outline-primary float-end" form="order-form" >Set order</button>
+
+      <form action="/series/order?_method=PUT" id="order-form" method="POST" novalidate>
+        <input name="orderedIds" id="order-input" readonly >
+      </form>
+      <ul class="row justify-content-center" id="series-order-list">
+        <% allSeries.map((s) => { %>
+        <li
+          class="card py-5 px-4"
+          style="width: 18rem"
+        >
+        <input type="hidden" id="series-id" value="<%=s.id%>" readonly />
+          <img class="card-img-top mt-3" draggable="false" src="<%=s.cover%>" />
+          <div class="card-body text-align-center">
+            <h5 class="card-title text-center"><%=s.name%></h5>
+            <h6>id: <%=s.id%></h4>
+            <div class="row justify-content-center">
+              <button type="button" class="btn btn-outline-dark">
+                Drag
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-grip-vertical"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M7 2a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0M7 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0M7 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m-3 3a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0m-3 3a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </li>
+        <% }) %>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+
+// let seriesIds = []
+const orderInput = document.getElementById("order-input");
+console.log(orderInput);
+
+const getIdsInOrder = () => {
+    let seriesIds = [];
+  let seriesInputs = document.querySelectorAll("#series-order-list li #series-id");
+  seriesInputs.forEach((s) => {
+    seriesIds.push(s.value);
+  })
+  console.log( seriesIds)
+  orderInput.value = seriesIds;
+
+}
+
+window.addEventListener("load", () => {
+
+    getIdsInOrder();
+    
+  // GET ALL LIST ITEMS
+  const listedSeries = document.querySelectorAll("#series-order-list li");
+ 
+  // FLAG FOR "CURRENT ITEM BEING DRAGGED"
+  let dragged;
+ 
+  // DRAG-AND-DROP MECHANISM
+  for (let i of listedSeries) {
+    // LIST ITEM IS DRAGGABLE
+    i.draggable = true;
+ 
+    // ON DRAG START - SET FLAG & DATA TRANSFER
+    i.ondragstart = e => {
+      dragged = i;
+      e.dataTransfer.dropEffect = "move";
+      e.dataTransfer.effectAllowed = "move";
+      e.dataTransfer.setData("text/html", i.innerHTML);
+    };
+ 
+    // ON DRAG OVER - NECESSARY PREVENT DEFAULT FOR DROP TO WORK
+    i.ondragover = e => e.preventDefault();
+ 
+    // ON DROP - "SWAP POSITION"
+    i.ondrop = e => {
+      e.preventDefault();
+      if (dragged != i) {
+        dragged.innerHTML = i.innerHTML;
+        i.innerHTML = e.dataTransfer.getData("text/html");
+        getIdsInOrder();
+      }
+    };
+ 
+    // STYLING
+    i.ondragenter = () => i.parentElement.classList.add("active");
+    i.ondragleave = () => i.parentElement.classList.remove("active");
+    i.ondragend = () => {
+      for (let el of listedSeries) { el.classList.remove("active"); }
+    };
+  }
+
+
+});
+</script>
