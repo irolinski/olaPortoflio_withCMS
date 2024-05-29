@@ -5,6 +5,9 @@ import fs from "fs";
 import cors from "cors";
 import methodOverride from "method-override";
 
+import ExpressError from "./public/utils/ExpressError";
+import "express-async-errors";
+
 const app = express();
 
 // postgress initalization
@@ -52,7 +55,9 @@ app.get("/", (req, res, next) => {
 
 app.get("/menu", async (req, res, next) => {
   try {
-    let allSeries = await client.query({ text: `SELECT * FROM "series" ORDER BY sequence;` });
+    let allSeries = await client.query({
+      text: `SELECT * FROM "series" ORDER BY sequence;`,
+    });
     allSeries = allSeries.rows;
     res.render("series", { allSeries });
   } catch (error) {
@@ -61,9 +66,13 @@ app.get("/menu", async (req, res, next) => {
 });
 
 app.get("/slideshow", async (req, res, next) => {
-  const q = await client.query({ text: `SELECT * FROM "slideshow"` });
-  const slides = q.rows;
-  res.render("slideshow", { slides });
+  try {
+    const q = await client.query({ text: `SELECT * FROM "slideshow"` });
+    const slides = q.rows;
+    res.render("slideshow", { slides });
+  } catch (error) {
+    next(error);
+  }
 });
 
 app.put("/slideshow", async (req, res, next) => {
@@ -145,7 +154,9 @@ app.get("/series/new", (req, res) => {
 
 app.get("/series/order", async (req, res, next) => {
   try {
-    let allSeries = await client.query({ text: `SELECT * FROM "series" ORDER BY sequence;` });
+    let allSeries = await client.query({
+      text: `SELECT * FROM "series" ORDER BY sequence;`,
+    });
     allSeries = allSeries.rows;
     res.render("series/order", { allSeries });
   } catch (error) {
@@ -214,17 +225,21 @@ app.put("/series/:id", async (req, res, next) => {
 
 app.get("/series/:id/edit", async (req, res, next) => {
   const { id } = req.params;
-  let series = await client.query({
-    text: `SELECT * FROM "series" WHERE id='${id}';`,
-  });
-  series = series.rows[0];
+  try {
+    let series = await client.query({
+      text: `SELECT * FROM "series" WHERE id='${id}';`,
+    });
+    series = series.rows[0];
 
-  let photos = await client.query({
-    text: `SELECT * FROM "photo" WHERE series_id='${id}'`,
-  });
-  photos = photos.rows;
+    let photos = await client.query({
+      text: `SELECT * FROM "photo" WHERE series_id='${id}'`,
+    });
+    photos = photos.rows;
 
-  res.render("series/edit", { series, photos });
+    res.render("series/edit", { series, photos });
+  } catch (error) {
+    next(error);
+  }
 });
 
 app.delete("/series/:id", async (req, res, next) => {
@@ -243,11 +258,15 @@ app.delete("/series/:id", async (req, res, next) => {
 });
 
 app.get("/about-me", async (req, res, next) => {
-  let abt = await client.query({
-    text: `SELECT * FROM "profile" WHERE role = 'client'`,
-  });
-  abt = abt.rows[0];
-  res.render("about-me", { abt });
+  try {
+    let abt = await client.query({
+      text: `SELECT * FROM "profile" WHERE role = 'client'`,
+    });
+    abt = abt.rows[0];
+    res.render("about-me", { abt });
+  } catch (error) {
+    next(error);
+  }
 });
 
 app.put("/about-me", async (req, res, next) => {
@@ -271,7 +290,9 @@ app.put("/about-me", async (req, res, next) => {
 
 app.get("/api/series", async (req, res, next) => {
   try {
-    const q = await client.query({ text: `SELECT * FROM "series" ORDER BY sequence;` });
+    const q = await client.query({
+      text: `SELECT * FROM "series" ORDER BY sequence;`,
+    });
     const seriesData: object[] = await Promise.all(
       q.rows.map(async (r: { id: number; slides: string[] }) => {
         const urlArray: string[] = [];
@@ -315,6 +336,17 @@ app.get("/api/about-me", async (req, res, next) => {
     next(error);
   }
 });
+
+app.all("*", (req, res, next) => {
+  next(new ExpressError("Page not found", 404));
+});
+
+app.use((error: any, req: any, res: any, next: any) => {
+  const { statusCode = 500 } = error;
+  if (!error.message) error.message = "Something went wrong!";
+  res.status(statusCode).render("./error", { error });
+});
+
 app.listen(3000, () =>
   console.log("🚀 Server ready at: http://localhost:3000")
 );

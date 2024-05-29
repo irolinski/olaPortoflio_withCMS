@@ -17,20 +17,3 @@ background-color: red;}
     background-color:#325de4;
 }
 
-/* @media (pointer:coarse) {
-.drag-btn-normal{
-    display: none;
-}
-    } */
-
-    @media (hover: none) {
-        .drag-btn-normal{
-            display: none !important;
-        }
-        }
-
-    @media not all and (hover:none) {
-        .drag-btn-touchscreen{
-            display: none !important;
-        }
-        }
