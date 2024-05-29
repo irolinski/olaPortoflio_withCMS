@@ -24,13 +24,13 @@ background-color: red;}
     } */
 
     @media (hover: none) {
-        .drag-btn-touchscreen{
+        .drag-btn-normal{
             display: none !important;
         }
         }
 
-        @media not all and (hover:none) {
-            .drag-btn-touchscreen{
-                display: none !important;
-            }
-            }
+    @media not all and (hover:none) {
+        .drag-btn-touchscreen{
+            display: none !important;
+        }
+        }
