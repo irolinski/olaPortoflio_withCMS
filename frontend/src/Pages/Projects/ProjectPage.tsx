@@ -5,7 +5,7 @@ type projectPageTypes = {
   slides: string[];
 };
 
-export default function  Project({ name, slides }: projectPageTypes) {
+export default function Project({ name, slides }: projectPageTypes) {
   return (
     <>
       <div className="flex justify-center">

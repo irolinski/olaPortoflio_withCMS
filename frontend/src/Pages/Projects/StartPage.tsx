@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
-// import { slides } from "../../../public/project_data/start_slides.ts";
 
 type startPageTypes = {
   instagramUrl: string;
 };
-
 
 export default function StartPage({ instagramUrl }: startPageTypes) {
   const blankData: any[] | (() => any[]) = [];
@@ -16,12 +14,11 @@ export default function StartPage({ instagramUrl }: startPageTypes) {
       const slideshowAPIRes = await fetch(
         "https://photoportfolio-cms-demo.vercel.app/api/slideshow"
       );
-     
+
       const slideshow = await slideshowAPIRes.json();
       setSlideshowData(slideshow);
     })();
   }, []);
-
 
   let slides = slideshowData;
 
@@ -75,7 +72,7 @@ export default function StartPage({ instagramUrl }: startPageTypes) {
           >
             O mnie
           </a>
-          {instagramUrl !== "" &&
+          {instagramUrl !== "" && (
             <a
               href={instagramUrl}
               target="_blank"
@@ -83,7 +80,7 @@ export default function StartPage({ instagramUrl }: startPageTypes) {
             >
               Instagram
             </a>
-          }
+          )}
         </div>
       </div>
       <div className="slideshow pt-16 px-8 sm:pt-16 md:pt-16 xl:pt-0">
