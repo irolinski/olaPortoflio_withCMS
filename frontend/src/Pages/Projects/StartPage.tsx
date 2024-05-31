@@ -5,15 +5,20 @@ export default function StartPage() {
   const blankData: any[] | (() => any[]) = [];
 
   const [slideshowData, setSlideshowData] = useState<any[]>(blankData);
+  const [instagramUrl, setInstagramUrl] = useState<any[]>(blankData);
 
   useEffect(() => {
     (async () => {
       const slideshowAPIRes = await fetch(
         "https://photoportfolio-cms-demo.vercel.app/api/slideshow"
       );
+      const profileAPIRes = await fetch(
+        "https://photoportfolio-cms-demo.vercel.app/api/about-me"
+      )
       const slideshow = await slideshowAPIRes.json();
-      console.log(slideshow);
+      const profile = await profileAPIRes.json();
       setSlideshowData(slideshow);
+console.log(profile)
     })();
   }, []);
 

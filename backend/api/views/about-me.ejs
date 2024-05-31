@@ -4,7 +4,13 @@
   <main class="mt-5">
     <h1>About me</h1>
     <div class="mx-auto">
-      <form action="/about-me?_method=PUT" class="needs-validation" id="about_me-form" method="POST" novalidate>
+      <form
+        action="/about-me?_method=PUT"
+        class="needs-validation"
+        id="about_me-form"
+        method="POST"
+        novalidate
+      >
         <div class="my-3 py-5 row" id="form-input-div">
           <div class="col-12 pt-3">
             <label for="profile_picture_url">Profile picture URL:</label>
@@ -28,7 +34,9 @@
               cols="25"
               required
               maxlength="512"
-            ><%=abt.description%></textarea>
+            >
+<%=abt.description%></textarea
+            >
             <div class="form-text">
               This will be the description visible on your 'about me' page. It
               would be good if it was short and concise. It will look good if
@@ -56,6 +64,16 @@
                 maxlength="50"
               />
             </div>
+            <div class="col-8 pt-3">
+              <label for="instagram_url">Instagram profile URL:</label>
+              <input
+                name="instagram_url"
+                class="form-control"
+                type="url"
+                value="<%=abt.instagram_url%>"
+                maxlength="100"
+              />
+            </div>
           </div>
         </div>
       </form>
@@ -74,21 +92,25 @@
 
 <script>
   (() => {
-  'use strict'
+    "use strict";
 
-  // Fetch all the forms we want to apply custom Bootstrap validation styles to
-  const forms = document.querySelectorAll('.needs-validation')
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    const forms = document.querySelectorAll(".needs-validation");
 
-  // Loop over them and prevent submission
-  Array.from(forms).forEach(form => {
-    form.addEventListener('submit', event => {
-      if (!form.checkValidity()) {
-        event.preventDefault()
-        event.stopPropagation()
-      }
+    // Loop over them and prevent submission
+    Array.from(forms).forEach((form) => {
+      form.addEventListener(
+        "submit",
+        (event) => {
+          if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
 
-      form.classList.add('was-validated')
-    }, false)
-  })
-})()
+          form.classList.add("was-validated");
+        },
+        false
+      );
+    });
+  })();
 </script>

@@ -270,16 +270,14 @@ app.get("/about-me", async (req, res, next) => {
 });
 
 app.put("/about-me", async (req, res, next) => {
-  const { profile_picture_url, phone_num, e_mail } = req.body;
+  const { profile_picture_url, phone_num, e_mail, instagram_url } = req.body;
   let { description } = req.body;
   if (description.includes(`'`)) {
     description = description.replaceAll(`'`, `''`);
   }
-  const queryText = `UPDATE "profile" SET profile_picture_url = '${profile_picture_url}', description = '${description}', phone_num = '${phone_num}', e_mail = '${e_mail}' WHERE role = 'client';`;
+  const queryText = `UPDATE "profile" SET profile_picture_url = '${profile_picture_url}', description = '${description}', phone_num = '${phone_num}', e_mail = '${e_mail}',  instagram_url = '${instagram_url}' WHERE role = 'client';`;
   try {
     const q = await client.query({ text: queryText });
-
-    //debug the problem with "" in description
     res.redirect("/menu");
   } catch (error) {
     next(error);
