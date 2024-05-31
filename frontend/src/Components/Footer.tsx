@@ -23,13 +23,15 @@ export default function Footer({ location, instagramUrl }: footerProps) {
         "bg-transparent py-12 px-4 w-full bottom-0"
       )}
     >
-      <a href={instagramUrl} target="_blank">
-        <img
-          src="icons/instagram.svg"
-          className="block h-8 w-8 mx-auto"
-          aria-hidden="true"
-        />
-      </a>
+      {instagramUrl !== "" && (
+        <a href={instagramUrl} target="_blank">
+          <img
+            src="icons/instagram.svg"
+            className="block h-8 w-8 mx-auto"
+            aria-hidden="true"
+          />
+        </a>
+      )}
     </footer>
   );
 }

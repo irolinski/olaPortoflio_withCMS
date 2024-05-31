@@ -75,13 +75,15 @@ export default function StartPage({ instagramUrl }: startPageTypes) {
           >
             O mnie
           </a>
-          <a
-            href={instagramUrl}
-            target="_blank"
-            className="hidden xl:block hover:text-gray font-light px-3 py-2 my-2 text-md sm:text-lg lg:text-xl font-header hover:cursor-crosshair"
-          >
-            Instagram
-          </a>
+          {instagramUrl !== "" &&
+            <a
+              href={instagramUrl}
+              target="_blank"
+              className="hidden xl:block hover:text-gray font-light px-3 py-2 my-2 text-md sm:text-lg lg:text-xl font-header hover:cursor-crosshair"
+            >
+              Instagram
+            </a>
+          }
         </div>
       </div>
       <div className="slideshow pt-16 px-8 sm:pt-16 md:pt-16 xl:pt-0">
