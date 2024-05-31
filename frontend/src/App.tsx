@@ -23,28 +23,34 @@ export default function App() {
   const blankData: any[] | (() => any[]) = [];
 
   let [imageData, setImageData] = useState<any[]>(blankData);
+  const [instagramUrl, setInstagramUrl] = useState<string>("");
 
   useEffect(() => {
     (async () => {
       const seriesAPIRes = await fetch(
         "https://photoportfolio-cms-demo.vercel.app/api/series"
       );
+      const profileAPIRes = await fetch(
+        "https://photoportfolio-cms-demo.vercel.app/api/about-me"
+      );
       const series = await seriesAPIRes.json();
+      const profile = await profileAPIRes.json();
+
       setImageData(series);
+      setInstagramUrl(profile.instagram_url);
     })();
   }, []);
 
-  console.log(imageData.map((p) => {
-    return p.slides
-    return p.name
-  }))
   return (
     <div className="min-h-full max-w-[1920px] mx-auto 3xl:relative 3xl:top-[12.5vh]">
       <Navbar location={location.pathname} />
       <div className="">
         <Routes>
           <Route path="/" element={<Navigate replace to="/start" />} />
-          <Route path="/start" element={<StartPage />} />
+          <Route
+            path="/start"
+            element={<StartPage instagramUrl={instagramUrl} />}
+          />
           <Route
             path="/projekty"
             element={<AllProjects imageData={imageData} />}
@@ -52,7 +58,7 @@ export default function App() {
           {imageData.map((p: seriesType, i: number) => {
             return (
               <Route
-                path={`/projekty/${p.name.replace(/\s+/g, '-').toLowerCase()}`}
+                path={`/projekty/${p.name.replace(/\s+/g, "-").toLowerCase()}`}
                 element={<ProjectPage name={p.name} slides={p.slides} />}
                 key={i}
               />
@@ -62,7 +68,7 @@ export default function App() {
           <Route path="*" element={<Navigate replace to="/start" />} />
         </Routes>
       </div>
-      <Footer location={location.pathname} />
+      <Footer location={location.pathname} instagramUrl={instagramUrl} />
     </div>
   );
 }

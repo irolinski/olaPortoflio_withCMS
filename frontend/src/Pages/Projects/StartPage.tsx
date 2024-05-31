@@ -1,26 +1,27 @@
 import { useEffect, useState } from "react";
 // import { slides } from "../../../public/project_data/start_slides.ts";
 
-export default function StartPage() {
+type startPageTypes = {
+  instagramUrl: string;
+};
+
+
+export default function StartPage({ instagramUrl }: startPageTypes) {
   const blankData: any[] | (() => any[]) = [];
 
   const [slideshowData, setSlideshowData] = useState<any[]>(blankData);
-  const [instagramUrl, setInstagramUrl] = useState<any[]>(blankData);
 
   useEffect(() => {
     (async () => {
       const slideshowAPIRes = await fetch(
         "https://photoportfolio-cms-demo.vercel.app/api/slideshow"
       );
-      const profileAPIRes = await fetch(
-        "https://photoportfolio-cms-demo.vercel.app/api/about-me"
-      )
+     
       const slideshow = await slideshowAPIRes.json();
-      const profile = await profileAPIRes.json();
       setSlideshowData(slideshow);
-console.log(profile)
     })();
   }, []);
+
 
   let slides = slideshowData;
 
@@ -75,7 +76,7 @@ console.log(profile)
             O mnie
           </a>
           <a
-            href="https://www.instagram.com/nadoleola"
+            href={instagramUrl}
             target="_blank"
             className="hidden xl:block hover:text-gray font-light px-3 py-2 my-2 text-md sm:text-lg lg:text-xl font-header hover:cursor-crosshair"
           >
