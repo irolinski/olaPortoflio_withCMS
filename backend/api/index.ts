@@ -55,7 +55,9 @@ app.use(methodOverride("_method"));
 
 // cors settings
 app.use(cors());
-app.options("*", cors());
+app.options("*", (req, res) => {
+  res.status(200).send("Preflight request allowed");
+});
 
 // session set-up
 app.use(session()); // session middleware
