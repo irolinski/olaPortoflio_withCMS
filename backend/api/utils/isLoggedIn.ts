@@ -1,8 +1,9 @@
+import { RequestWithSession } from "../../definitions";
 
 
-export default function isLoggedIn(req, res, next) {
-    if (!req.isAuthenticated()) {
-        // req.flash('error', 'You have to be logged in to do this.');
+export default function isLoggedIn(req: RequestWithSession, res, next) {
+    if (req.session.user_authenticated !== 'true') {
+
         return res.redirect('/home');
     }
     next ();

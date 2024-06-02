@@ -1,0 +1,124 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="container mx-auto col-10 col-md-6 px-12">
+  <main class="mt-5">
+    <h1>Enter your preferred login credentials</h1>
+    <form
+      class="mx-auto needs-validation"
+      action="/register"
+      method="POST"
+      novalidate
+    >
+      <div class="my-3 py-5 row" id="form-input-div">
+        <div class="col-12 pt-3">
+          <label for="e_mail">Your e-mail adress:</label>
+          <input
+            name="e_mail"
+            id="e_mail"
+            type="email"
+            class="form-control needs-validation"
+            required
+            maxlength="52"
+          />
+        </div>
+        <div class="col-12 pt-3">
+          <div class="col-8">
+            <label for="name">Username:</label>
+            <input
+              name="username"
+              id="name"
+              type="text"
+              class="form-control needs-validation"
+              required
+              maxlength="24"
+            />
+          </div>
+        </div>
+        <div class="row pt-3">
+          <div class="col-6">
+            <label for="register-password">Password:</label>
+            <input
+              name="password"
+              id="register-password"
+              type="password"
+              class="form-control needs-validation"
+              placeholder="Enter password that is between 6-16 characters long"
+              required
+              minlength="6"
+              maxlength="16"
+            />
+            <div class="invalid-feedback">
+              Password has to be 6 to 16 characters long <br />
+              (and the fields need to match)
+            </div>
+          </div>
+          <div class="col-6">
+            <label for="confirm_password">Confirm password:</label>
+            <input
+              type="password"
+              id="confirm_password"
+              class="form-control needs-validation"
+              placeholder="Confirm password"
+              required
+              minlength="6"
+              maxlength="16"
+            />
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-outline-primary float-end">
+        Submit
+      </button>
+    </form>
+  </main>
+</div>
+
+<script>
+  const password = document.getElementById("register_password");
+  const confirm_password = document.getElementById("confirm_password");
+
+  function validatePassword() {
+    if (password.value != confirm_password.value) {
+      confirm_password.setCustomValidity("Passwords Don't Match!");
+    } else {
+      confirm_password.setCustomValidity("");
+    }
+    if (password.value.length < 6 || password.value.length >= 12) {
+      password.setCustomValidity(
+        "Password needs to be between 6 and 12 characters long!"
+      );
+      confirm_password.setCustomValidity(
+        "Password needs to be between 6 and 12 characters long!"
+      );
+    } else {
+      password.setCustomValidity("");
+    }
+  }
+
+  password.onchange = validatePassword;
+  confirm_password.onkeyup = validatePassword;
+</script>
+
+<script>
+  (() => {
+    "use strict";
+
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    const forms = document.querySelectorAll(".needs-validation");
+
+    // Loop over them and prevent submission
+    Array.from(forms).forEach((form) => {
+      form.addEventListener(
+        "submit",
+        (event) => {
+          if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+          form.classList.add("was-validated");
+        },
+        false
+      );
+    });
+  })();
+</script>

@@ -1,17 +1,25 @@
+if(process.env.NODE_ENV !== "production") {
+  require('dotenv').config();
+}
+
 import express from "express";
 import bodyParser from "body-parser";
 import path from "path";
 import fs from "fs";
 import cors from "cors";
 import methodOverride from "method-override";
-
 import ExpressError from "./utils/ExpressError";
 import "express-async-errors";
 
+
 const app = express();
 
-// postgress initalization
+// session set-up
+const session = require('express-session');
+app.use(session({secret: process.env.SESSION_SECRET, resave: true, saveUninitialized: true}));
 
+
+// postgress initalization
 const { Client } = require("pg");
 require("dotenv").config({
   override: true,
@@ -29,30 +37,33 @@ const client = new Client(process.env.DATABASE_URL);
 })();
 
 // ejs set-up
-
 const ejsMate = require("ejs-mate");
 app.set("views", path.join(__dirname, "views"));
 app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
 
 // express settings
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/public", express.static("public"));
 app.use(methodOverride("_method"));
 
 // cors settings
-
 app.use(cors());
 app.options("*", cors());
 
-// routes
+// flash set-up
+app.use(session()); // session middleware
+app.use(require('flash')());
+ 
 
+// routes
 const menuRouter = require('./routes/menu');
+const authRouter = require('./routes/auth');
 const seriesRouter = require('./routes/series');
 const apiRouter = require('./routes/api');
 
+app.use('/', authRouter);
 app.use('/', menuRouter);
 app.use('/series', seriesRouter);
 app.use('/api', apiRouter); 
