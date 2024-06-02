@@ -1,5 +1,5 @@
-if(process.env.NODE_ENV !== "production") {
-  require('dotenv').config();
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
 }
 
 import express from "express";
@@ -10,14 +10,19 @@ import cors from "cors";
 import methodOverride from "method-override";
 import ExpressError from "./utils/ExpressError";
 import "express-async-errors";
-
+import flash from "connect-flash";
 
 const app = express();
 
 // session set-up
-const session = require('express-session');
-app.use(session({secret: process.env.SESSION_SECRET, resave: true, saveUninitialized: true}));
-
+const session = require("express-session");
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: true,
+    saveUninitialized: true,
+  })
+);
 
 // postgress initalization
 const { Client } = require("pg");
@@ -52,21 +57,27 @@ app.use(methodOverride("_method"));
 app.use(cors());
 app.options("*", cors());
 
-// flash set-up
+// session set-up
 app.use(session()); // session middleware
-app.use(require('flash')());
- 
+
+// flash set-up
+app.use(flash());
+app.use((req, res, next) => {
+  res.locals.success = req.flash("success");
+  res.locals.error = req.flash("error");
+  next();
+});
 
 // routes
-const menuRouter = require('./routes/menu');
-const authRouter = require('./routes/auth');
-const seriesRouter = require('./routes/series');
-const apiRouter = require('./routes/api');
+const menuRouter = require("./routes/menu");
+const authRouter = require("./routes/auth");
+const seriesRouter = require("./routes/series");
+const apiRouter = require("./routes/api");
 
-app.use('/', authRouter);
-app.use('/', menuRouter);
-app.use('/series', seriesRouter);
-app.use('/api', apiRouter); 
+app.use("/", authRouter);
+app.use("/", menuRouter);
+app.use("/series", seriesRouter);
+app.use("/api", apiRouter);
 
 app.all("*", (req, res, next) => {
   next(new ExpressError("Page not found", 404));

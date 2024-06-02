@@ -19,9 +19,9 @@ const client = new Client(process.env.DATABASE_URL);
 
 export const getNewSeries = (req: Request, res: Response) => {
   res.render("series/new");
-}
+};
 
-export const postSeries = async (req: Request, res:Response, next:any) => {
+export const postSeries = async (req: Request, res: Response, next: any) => {
   let name = req.body.name;
   if (name.includes(`'`)) {
     name = name.replaceAll(`'`, `''`);
@@ -64,14 +64,21 @@ export const postSeries = async (req: Request, res:Response, next:any) => {
 
   try {
     const q = await client.query({ text: queryText });
+    req.flash(
+      "success",
+      "Your new series has been successfully added to the database!"
+    );
+    res.redirect("/menu");
   } catch (error) {
     next(error);
   }
-
-  res.redirect("/menu");
 };
 
-export const getSeriesOrder = async (req: Request, res:Response, next:any) => {
+export const getSeriesOrder = async (
+  req: Request,
+  res: Response,
+  next: any
+) => {
   try {
     let allSeries = await client.query({
       text: `SELECT * FROM "series" ORDER BY sequence;`,
@@ -83,7 +90,11 @@ export const getSeriesOrder = async (req: Request, res:Response, next:any) => {
   }
 };
 
-export const putSeriesOrder = async (req: Request, res:Response, next:any) => {
+export const putSeriesOrder = async (
+  req: Request,
+  res: Response,
+  next: any
+) => {
   const orderedIds = req.body.orderedIds.split(`,`);
   const queryText = orderedIds
     .map((id: number, o: number) => {
@@ -92,13 +103,14 @@ export const putSeriesOrder = async (req: Request, res:Response, next:any) => {
     .join("");
   try {
     const q = await client.query({ text: queryText });
+    req.flash("success", "Changes applied.");
     res.redirect("/menu");
   } catch (error) {
     next(error);
   }
 };
 
-export const getEditSeries = async (req: Request, res:Response, next:any) => {
+export const getEditSeries = async (req: Request, res: Response, next: any) => {
   const { id } = req.params;
   try {
     let series = await client.query({
@@ -117,7 +129,7 @@ export const getEditSeries = async (req: Request, res:Response, next:any) => {
   }
 };
 
-export const putEditSeries = async (req: Request, res:Response, next:any) => {
+export const putEditSeries = async (req: Request, res: Response, next: any) => {
   let name = req.body.name;
   if (name.includes(`'`)) {
     name = name.replaceAll(`'`, `''`);
@@ -154,14 +166,14 @@ export const putEditSeries = async (req: Request, res:Response, next:any) => {
 
   try {
     const q = await client.query({ text: queryText });
+    req.flash("success", "Your changes have been saved.");
+    res.redirect("/menu");
   } catch (error) {
     next(error);
   }
-
-  res.redirect("/menu");
 };
 
-export const deleteSeries = async (req: Request, res:Response, next:any) => {
+export const deleteSeries = async (req: Request, res: Response, next: any) => {
   const id = path.basename(req.path);
 
   const queryText = `DELETE FROM "photo" WHERE series_id = '${id}';
@@ -169,9 +181,9 @@ export const deleteSeries = async (req: Request, res:Response, next:any) => {
 
   try {
     const q = await client.query({ text: queryText });
+    req.flash("success", "Your changes have been saved.");
+    res.redirect("/menu");
   } catch (error) {
     next(error);
   }
-
-  res.redirect("/menu");
-}
+};

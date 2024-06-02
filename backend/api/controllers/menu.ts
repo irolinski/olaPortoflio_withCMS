@@ -1,4 +1,3 @@
-
 import express, { ErrorRequestHandler, Request, Response } from "express";
 
 import { RequestWithSession } from "../../definitions";
@@ -66,10 +65,11 @@ export const putSlideshow = async (req: Request, res: Response, next: any) => {
 
   try {
     const q = await client.query({ text: queryText });
+    req.flash("success", "Your changes have been saved.");
+    res.redirect("/menu");
   } catch (error) {
     next(error);
   }
-  res.redirect("/menu");
 };
 
 export const getAboutMe = async (req: Request, res: Response, next: any) => {
@@ -93,6 +93,7 @@ export const putAboutMe = async (req: Request, res: Response, next: any) => {
   const queryText = `UPDATE "profile" SET profile_picture_url = '${profile_picture_url}', description = '${description}', phone_num = '${phone_num}', e_mail = '${e_mail}',  instagram_url = '${instagram_url}' WHERE role = 'client';`;
   try {
     const q = await client.query({ text: queryText });
+    req.flash("success", "Your changes have been saved.");
     res.redirect("/menu");
   } catch (error) {
     next(error);
