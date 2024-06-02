@@ -17,6 +17,10 @@ const client = new Client(process.env.DATABASE_URL);
   }
 })();
 
+export const getNewSeries = (req: Request, res: Response) => {
+  res.render("series/new");
+}
+
 export const postSeries = async (req: Request, res:Response, next:any) => {
   let name = req.body.name;
   if (name.includes(`'`)) {

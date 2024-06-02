@@ -1,25 +1,23 @@
 import express from "express";
 const router = express.Router();
 import path from "path";
-import { deleteSeries, getEditSeries, getSeriesOrder, postSeries, putEditSeries, putSeriesOrder } from "../controllers/series";
+import { deleteSeries, getEditSeries, getNewSeries, getSeriesOrder, postSeries, putEditSeries, putSeriesOrder } from "../controllers/series";
+import isLoggedIn from "../utils/isLoggedIn";
 
+router.get("/new", isLoggedIn, getNewSeries);
 
-router.post("/", postSeries);
-
-router.get("/new", (req, res) => {
-  res.render("series/new");
-});
+router.post("/", isLoggedIn, postSeries);
 
 router
   .route("/order")
-  .get(getSeriesOrder)
-  .put(putSeriesOrder);
+  .get(isLoggedIn, getSeriesOrder)
+  .put(isLoggedIn, putSeriesOrder);
 
 router.get("/:id/edit", getEditSeries);
 
 router
   .route("/:id")
-  .put(putEditSeries)
-  .delete(deleteSeries);
+  .put(isLoggedIn, putEditSeries)
+  .delete(isLoggedIn, deleteSeries);
 
 module.exports = router;
