@@ -1,6 +1,5 @@
 import { Route, Routes, Navigate, useLocation } from "react-router-dom";
 import "./App.scss";
-import "react-loading-skeleton/dist/skeleton.css";
 import Footer from "./Components/Footer";
 import Navbar from "./Components/Navbar";
 import StartPage from "./Pages/Projects/StartPage.tsx";

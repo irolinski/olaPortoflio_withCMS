@@ -9,8 +9,13 @@ type dataProp = {
   loadingState: boolean
 }
 
+// setTimeout(() => {
+//   setSlideOpacity(1);
+// }, 600);
+
 export default function AllProjects({ imageData, loadingState }: dataProp) {
-  if (loadingState) return (<div className="flex justify-center translate-y-[35vh] text-grey"><ScaleLoader color={"#e3e1e1"} /></div>)
+  if (loadingState)  return (<div className="flex justify-center translate-y-[35vh] text-grey"><ScaleLoader color={"#e3e1e1"} /></div>)
+  setTimeout(() => {console.log('Waiting some more to prevent pop-in...'), 500})
     return (
     <div className="flex flex-wrap fade-in-1s mx-auto justify-around md:p-16 pt-4">
       {imageData.map((p:seriesType, i: number) => {

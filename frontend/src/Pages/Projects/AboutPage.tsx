@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Skeleton from "react-loading-skeleton";
+import { ScaleLoader } from "react-spinners";
 
 type aboutData = {
   role: string;
@@ -28,39 +28,42 @@ export default function AboutPage() {
     })();
   }, []);
 
-  if (loadingState)
-  return (
-    <div className="flex flex-wrap mx-auto justify-around sm:p-16 mb-36 mt-24 lg:my-0 lg:py-[8vh] lg:flex-nowrap">
-      <div className="py-8 mx-auto self-center xs:-translate-y-12 lg:-translate-y-0 hover:cursor-none">
-        <Skeleton width={280} height={180} className="max-w-96 max-h-96" />
-      </div>
-      <div className="font-header py-10 px-8 sm:px-12 lg:p-10 my-1 lg:my-4">
-        <p className="pt-16 md:px-24 lg:py-8 lg:px-36 lg:pl-12 ">
-          <Skeleton count={2} className="w-96 lg:w-56 xl:w-96" />
-          <br />
-          <Skeleton count={2} className="w-96 lg:w-56 xl:w-96" />
-          <br />
-          <Skeleton count={2} className="w-96 lg:w-56 xl:w-96" />
-          <br />
+  // if (loadingState)
+  // return (
+  //   <div className="flex flex-wrap mx-auto justify-around sm:p-16 mb-36 mt-24 lg:my-0 lg:py-[8vh] lg:flex-nowrap">
+  //     <div className="py-8 mx-auto self-center xs:-translate-y-12 lg:-translate-y-0 hover:cursor-none">
+  //       <Skeleton width={280} height={180} className="max-w-96 max-h-96" />
+  //     </div>
+  //     <div className="font-header py-10 px-8 sm:px-12 lg:p-10 my-1 lg:my-4">
+  //       <p className="pt-16 md:px-24 lg:py-8 lg:px-36 lg:pl-12 ">
+  //         <Skeleton count={2} className="w-96 lg:w-56 xl:w-96" />
+  //         <br />
+  //         <Skeleton count={2} className="w-96 lg:w-56 xl:w-96" />
+  //         <br />
+  //         <Skeleton count={2} className="w-96 lg:w-56 xl:w-96" />
+  //         <br />
 
-          <span className="flex pt-2">
-            <Skeleton className="w-64 lg:w-40 xl:w-64" /> <br />
-          </span>
-          <span className="flex pt-1">
-            <Skeleton className="w-64 lg:w-40 xl:w-64" />
-          </span>
-        </p>
-      </div>
-    </div>
-  );
+  //         <span className="flex pt-2">
+  //           <Skeleton className="w-64 lg:w-40 xl:w-64" /> <br />
+  //         </span>
+  //         <span className="flex pt-1">
+  //           <Skeleton className="w-64 lg:w-40 xl:w-64" />
+  //         </span>
+  //       </p>
+  //     </div>
+  //   </div>
+  // );
+
+  if (loadingState) return (<div className="flex justify-center translate-y-[35vh] text-grey"><ScaleLoader color={"#e3e1e1"} /></div>)
+
   return (
     <div className="flex flex-wrap fade-in-1s mx-auto justify-around sm:p-16 mb-36 mt-24 lg:my-0 lg:py-[8vh] lg:flex-nowrap">
       <img
-        className="max-w-96 max-h-96 py-8 px-16 lg:px-16 mx-auto self-center xs:-translate-y-12 lg:-translate-y-0 hover:cursor-none"
+        className="fade-in-2s max-w-96 max-h-96 py-8 px-16 lg:px-16 mx-auto self-center xs:-translate-y-12 lg:-translate-y-0 hover:cursor-none"
         src={aboutData?.profile_picture_url}
       />
       <div className="about-text font-header py-10 px-8 sm:px-12 lg:p-10 my-1 lg:my-4">
-        <p className="pt-16 text-md md:px-16 lg:py-8 lg:px-24">
+        <p className="fade-in-1s pt-16 text-md md:px-16 lg:py-8 lg:px-24">
           <span className="text-justify whitespace-pre-line">
             {aboutData?.description}
           </span>

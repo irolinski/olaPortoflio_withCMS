@@ -86,7 +86,7 @@ export default function StartPage({ instagramUrl, loadingState }: startPageTypes
         </div>
       </div>
       <div className="slideshow pt-16 px-8 sm:pt-16 md:pt-16 xl:pt-0">
-        {/* load all slideshow images */}
+        {/* load all slideshow images - this prevents the slideshow from bugging out on low conncection speed */}
         {slides.map((src, i) => {
           return <img className="hidden" src={src} key={i} />;
         })}
