@@ -12,7 +12,7 @@ type aboutData = {
 
 export default function AboutPage() {
   const [aboutData, setAboutData] = useState<aboutData>();
-  const [d, setD] = useState<string[]>([]);
+  // const [d, setD] = useState<string[]>([]);
   const [loadingState, setLoadingState] = useState<boolean>(true);
 
   useEffect(() => {
@@ -23,7 +23,7 @@ export default function AboutPage() {
       const data = await aboutmeAPIRes.json();
       console.log(data);
       setAboutData(data);
-      setD(data.description.split("\n\n\n"));
+      // setD(data.description.split("\n\n\n"));
       setLoadingState(false);
     })();
   }, []);
@@ -57,6 +57,7 @@ export default function AboutPage() {
   if (loadingState) return (<div className="flex justify-center translate-y-[35vh] text-grey"><ScaleLoader color={"#e3e1e1"} /></div>)
 
   return (
+    <div className="min-w-[100vw] min-h-[70vh]">
     <div className="flex flex-wrap fade-in-1s mx-auto justify-around sm:p-16 mb-36 mt-24 lg:my-0 lg:py-[8vh] lg:flex-nowrap">
       <img
         className="fade-in-2s max-w-96 max-h-96 py-8 px-16 lg:px-16 mx-auto self-center xs:-translate-y-12 lg:-translate-y-0 hover:cursor-none"
@@ -87,6 +88,6 @@ export default function AboutPage() {
           </span>
         </p>
       </div>
-    </div>
+    </div></div>
   );
 }

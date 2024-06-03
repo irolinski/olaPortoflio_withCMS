@@ -1,5 +1,6 @@
 import { Disclosure } from "@headlessui/react";
 import { useEffect, useState } from "react";
+import { baseUrl } from "../App";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -23,9 +24,9 @@ export default function Navbar({ location }: navbarProps) {
   });
 
   const navigation = [
-    { name: "Start", href: "/#/start", current: startState },
-    { name: "Projekty", href: "/#/projekty", current: projectsState },
-    { name: "O mnie", href: "/#/o-mnie", current: aboutState },
+    { name: "Start", href: `${baseUrl}/#/start`, current: startState },
+    { name: "Projekty", href: `${baseUrl}/#/projekty`, current: projectsState },
+    { name: "O mnie", href: `${baseUrl}/#/o-mnie`, current: aboutState },
   ];
 
   return (

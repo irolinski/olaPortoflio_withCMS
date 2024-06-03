@@ -20,14 +20,14 @@ export default function Footer({ location, instagramUrl }: footerProps) {
     <footer
       className={classNames(
         startState ? "xl:hidden" : "",
-        "bg-transparent py-12 px-4 w-full bottom-0"
+        "bg-transparent py-12 px-4 w-full bottom-0 fade-in-3s"
       )}
     >
       {instagramUrl !== "" && (
-        <a href={instagramUrl} className="fade-in-3s" target="_blank">
+        <a href={instagramUrl}  target="_blank">
           <img
             src="icons/instagram.svg"
-            className="block h-8 w-8 mx-auto"
+            className="block h-8 w-8 mx-auto fade-in-3s"
             aria-hidden="true"
           />
         </a>

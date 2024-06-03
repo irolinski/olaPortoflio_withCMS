@@ -8,7 +8,7 @@ import ProjectPage from "./Pages/Projects/ProjectPage.tsx";
 import AboutPage from "./Pages/Projects/AboutPage.tsx";
 import { useEffect, useState } from "react";
 
-// https://www.reddit.com/r/reactjs/comments/1baove7/how_can_i_prevent_the_page_from_rendering_until/
+export const baseUrl = "/photoportfolio_cms-demo"
 
 export type seriesType = {
   name: string;
@@ -46,7 +46,8 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-full max-w-[1920px] mx-auto 3xl:relative 3xl:top-[12.5vh]">
+    <>
+    <div className="min-h-full max-w-[1920px] mx-auto relative 3xl:top-[12.5vh]">
       <Navbar location={location.pathname} />
       <div className="">
         <Routes>
@@ -72,7 +73,9 @@ export default function App() {
           <Route path="*" element={<Navigate replace to="/start" />} />
         </Routes>
       </div>
-      <Footer location={location.pathname} instagramUrl={instagramUrl} />
     </div>
+    <Footer location={location.pathname} instagramUrl={instagramUrl} />
+    </ >
+
   );
 }

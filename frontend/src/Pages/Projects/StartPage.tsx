@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { ScaleLoader } from "react-spinners";
+import { baseUrl } from "../../App";
 
 type startPageTypes = {
   instagramUrl: string;
@@ -43,7 +44,7 @@ export default function StartPage({ instagramUrl, loadingState }: startPageTypes
   if (loadingState) return (<div className="flex justify-center translate-y-[45vh] text-grey"><ScaleLoader color={"#e3e1e1"} /></div>)
   return (
     <div
-      className="flex flex-wrap mx-auto justify-around sm:p-16 mb-36 mt-24 sm:mt-0 sm:mb-8 md:mb-0 lg:mb-8 lg:pt-[12.5vh] xl:flex-nowrap xl:py-[20vh]"
+      className="flex flex-wrap min-w-[100%] min-h-[100%] mx-auto justify-around sm:p-16 mb-36 mt-24 sm:mt-0 sm:mb-8 md:mb-0 lg:mb-8 lg:pt-[12.5vh] xl:flex-nowrap xl:py-[20vh]"
       onLoad={() => {
         if (!showStarted) {
           slide();
@@ -63,13 +64,13 @@ export default function StartPage({ instagramUrl, loadingState }: startPageTypes
         </div>
         <div className="flex flex-row px-8 pt-4 xs:pt-8 justify-center xl:flex-col xl:text-center xl:pt-36">
           <a
-            href="/#/projekty"
+            href={`${baseUrl}/#/projekty`}
             className="hover:text-gray font-light px-3 py-2 my-2 text-md sm:text-lg lg:text-xl font-header hover:cursor-crosshair"
           >
             Projekty
           </a>
           <a
-            href="/#/o-mnie"
+            href={`${baseUrl}/#/o-mnie`}
             className="hover:text-gray font-light px-3 py-2 my-2 text-md sm:text-lg lg:text-xl font-header hover:cursor-crosshair"
           >
             O mnie
@@ -93,7 +94,7 @@ export default function StartPage({ instagramUrl, loadingState }: startPageTypes
 
         {/* display only the one determined by slide function */}
         <div style={{ opacity: slideOpacity, transition: `opacity 0.7s` }}>
-          <img className="w-[800px]" src={image} />
+          <img className="w-[800px] min-h-[20vh] xxs:min-h-[25vh] xs:min-h-[30vh] sm:min-h-[30vh] md:min-h-[45vh] h-[100%}" src={image} />
         </div>
       </div>
     </div>

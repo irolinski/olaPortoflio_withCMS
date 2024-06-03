@@ -12,9 +12,9 @@ export default function ProjectCard({
   seriesUrl,
 }: cardProps) {
   return (
-    <div className="project-card max-w-full mx-8 my-10 md:mx-4 flex flex-col justify-center ">
+    <div className="project-card w-96 h-96 max-w-full mx-8 my-10 md:mx-5 flex flex-col justify-center ">
       <Link to={seriesUrl}>
-        <img className="xs:max-w-96 xs:max-h-96" src={imageUrl} />
+        <img className="xs:max-w-96 xs:max-h-96 fade-in-2s" src={imageUrl} />
         <div className="py-6 text-left">
           <span className="project-title font-header text-xl pl-2">
             {seriesTitle}
