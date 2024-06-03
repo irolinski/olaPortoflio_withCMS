@@ -24,7 +24,7 @@ export default function Footer({ location, instagramUrl }: footerProps) {
       )}
     >
       {instagramUrl !== "" && (
-        <a href={instagramUrl} target="_blank">
+        <a href={instagramUrl} className="fade-in-3s" target="_blank">
           <img
             src="icons/instagram.svg"
             className="block h-8 w-8 mx-auto"

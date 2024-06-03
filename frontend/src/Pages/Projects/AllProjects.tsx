@@ -1,3 +1,4 @@
+import { ScaleLoader } from "react-spinners";
 import { dataType, seriesType } from "../../App";
 import SeriesCard from "../../Components/Projects/ProjectCard";
 
@@ -5,11 +6,13 @@ import SeriesCard from "../../Components/Projects/ProjectCard";
 
 type dataProp = {
   imageData: dataType
+  loadingState: boolean
 }
 
-export default function AllProjects({ imageData }: dataProp) {
-  return (
-    <div className="flex flex-wrap mx-auto justify-around md:p-16 pt-4">
+export default function AllProjects({ imageData, loadingState }: dataProp) {
+  if (loadingState) return (<div className="flex justify-center translate-y-[35vh] text-grey"><ScaleLoader color={"#e3e1e1"} /></div>)
+    return (
+    <div className="flex flex-wrap fade-in-1s mx-auto justify-around md:p-16 pt-4">
       {imageData.map((p:seriesType, i: number) => {
         return (
           <SeriesCard

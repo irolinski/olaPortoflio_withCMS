@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
+import { ScaleLoader } from "react-spinners";
 
 type startPageTypes = {
   instagramUrl: string;
+  loadingState: boolean;
 };
 
-export default function StartPage({ instagramUrl }: startPageTypes) {
+export default function StartPage({ instagramUrl, loadingState }: startPageTypes) {
   const blankData: any[] | (() => any[]) = [];
 
   const [slideshowData, setSlideshowData] = useState<any[]>(blankData);
@@ -38,7 +40,7 @@ export default function StartPage({ instagramUrl }: startPageTypes) {
 
     imgNum < slides.length - 1 ? setImgNum(imgNum + 1) : setImgNum(0);
   }
-
+  if (loadingState) return (<div className="flex justify-center translate-y-[45vh] text-grey"><ScaleLoader color={"#e3e1e1"} /></div>)
   return (
     <div
       className="flex flex-wrap mx-auto justify-around sm:p-16 mb-36 mt-24 sm:mt-0 sm:mb-8 md:mb-0 lg:mb-8 lg:pt-[12.5vh] xl:flex-nowrap xl:py-[20vh]"
@@ -53,7 +55,7 @@ export default function StartPage({ instagramUrl }: startPageTypes) {
         }
       }}
     >
-      <div className="start-menu xl:pr-16">
+      <div className="start-menu fade-in-1s xl:pr-16">
         <div className="text-center">
           <span className="font-header hover:text-gray-600/75 text-3xl xs:text-4xl hover:cursor-none">
             Pola Walczak
@@ -76,7 +78,7 @@ export default function StartPage({ instagramUrl }: startPageTypes) {
             <a
               href={instagramUrl}
               target="_blank"
-              className="hidden xl:block hover:text-gray font-light px-3 py-2 my-2 text-md sm:text-lg lg:text-xl font-header hover:cursor-crosshair"
+              className="instagram-link hidden xl:block hover:text-gray font-light px-3 py-2 my-2 text-md sm:text-lg lg:text-xl font-header hover:cursor-crosshair"
             >
               Instagram
             </a>

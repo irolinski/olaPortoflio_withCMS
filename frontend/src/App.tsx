@@ -1,5 +1,6 @@
 import { Route, Routes, Navigate, useLocation } from "react-router-dom";
 import "./App.scss";
+import "react-loading-skeleton/dist/skeleton.css";
 import Footer from "./Components/Footer";
 import Navbar from "./Components/Navbar";
 import StartPage from "./Pages/Projects/StartPage.tsx";
@@ -7,6 +8,8 @@ import AllProjects from "./Pages/Projects/AllProjects";
 import ProjectPage from "./Pages/Projects/ProjectPage.tsx";
 import AboutPage from "./Pages/Projects/AboutPage.tsx";
 import { useEffect, useState } from "react";
+
+// https://www.reddit.com/r/reactjs/comments/1baove7/how_can_i_prevent_the_page_from_rendering_until/
 
 export type seriesType = {
   name: string;
@@ -24,6 +27,7 @@ export default function App() {
 
   let [imageData, setImageData] = useState<any[]>(blankData);
   const [instagramUrl, setInstagramUrl] = useState<string>("");
+  const [imgsLoadingState, setImgsLoadingState] = useState<boolean>(true);
 
   useEffect(() => {
     (async () => {
@@ -38,6 +42,7 @@ export default function App() {
 
       setImageData(series);
       setInstagramUrl(profile.instagram_url);
+      setImgsLoadingState(false);
     })();
   }, []);
 
@@ -49,11 +54,11 @@ export default function App() {
           <Route path="/" element={<Navigate replace to="/start" />} />
           <Route
             path="/start"
-            element={<StartPage instagramUrl={instagramUrl} />}
+            element={<StartPage instagramUrl={instagramUrl} loadingState={imgsLoadingState} />}
           />
           <Route
             path="/projekty"
-            element={<AllProjects imageData={imageData} />}
+            element={<AllProjects imageData={imageData} loadingState={imgsLoadingState} />}
           />
           {imageData.map((p: seriesType, i: number) => {
             return (
