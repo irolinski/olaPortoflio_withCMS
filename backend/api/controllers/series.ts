@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import path from "path";
+import { RequestWithSessionAndFlash } from "../../definitions";
 
 // postgress initalization
 const { Client } = require("pg");
@@ -21,7 +22,7 @@ export const getNewSeries = (req: Request, res: Response) => {
   res.render("series/new");
 };
 
-export const postSeries = async (req: Request, res: Response, next: any) => {
+export const postSeries = async (req: RequestWithSessionAndFlash, res: Response, next: any) => {
   let name = req.body.name;
   if (name.includes(`'`)) {
     name = name.replaceAll(`'`, `''`);
@@ -91,7 +92,7 @@ export const getSeriesOrder = async (
 };
 
 export const putSeriesOrder = async (
-  req: Request,
+  req: RequestWithSessionAndFlash,
   res: Response,
   next: any
 ) => {
@@ -129,7 +130,7 @@ export const getEditSeries = async (req: Request, res: Response, next: any) => {
   }
 };
 
-export const putEditSeries = async (req: Request, res: Response, next: any) => {
+export const putEditSeries = async (req: RequestWithSessionAndFlash, res: Response, next: any) => {
   let name = req.body.name;
   if (name.includes(`'`)) {
     name = name.replaceAll(`'`, `''`);
@@ -173,7 +174,7 @@ export const putEditSeries = async (req: Request, res: Response, next: any) => {
   }
 };
 
-export const deleteSeries = async (req: Request, res: Response, next: any) => {
+export const deleteSeries = async (req: RequestWithSessionAndFlash, res: Response, next: any) => {
   const id = path.basename(req.path);
 
   const queryText = `DELETE FROM "photo" WHERE series_id = '${id}';

@@ -1,6 +1,6 @@
 import express, { ErrorRequestHandler, Request, Response } from "express";
 
-import { RequestWithSession } from "../../definitions";
+import { RequestWithSessionAndFlash } from "../../definitions";
 
 // postgress initalization
 const { Client } = require("pg");
@@ -23,7 +23,7 @@ export const redirect2Main = (req: Request, res: Response) => {
 };
 
 export const getMenu = async (
-  req: RequestWithSession,
+  req: RequestWithSessionAndFlash,
   res: Response,
   next: any
 ) => {
@@ -48,7 +48,7 @@ export const getSlideshow = async (req: Request, res: Response, next: any) => {
   }
 };
 
-export const putSlideshow = async (req: Request, res: Response, next: any) => {
+export const putSlideshow = async (req: RequestWithSessionAndFlash, res: Response, next: any) => {
   const images = req.body;
   const urlArray: string[] = Object.values(images);
   const imgAmount = Object.keys(urlArray).length;
@@ -84,7 +84,7 @@ export const getAboutMe = async (req: Request, res: Response, next: any) => {
   }
 };
 
-export const putAboutMe = async (req: Request, res: Response, next: any) => {
+export const putAboutMe = async (req: RequestWithSessionAndFlash, res: Response, next: any) => {
   const { profile_picture_url, phone_num, e_mail, instagram_url } = req.body;
   let { description } = req.body;
   if (description.includes(`'`)) {

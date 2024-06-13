@@ -10,24 +10,19 @@
   padding: 5vw 10vw;
 }
 
-// footer{
-//   position: absolute !important;
-//   bottom: -10px !important ;
-// }
-
 /* projects page */
 
 .project-card {
   img {
-    transition: opacity 0.7s;
+    transition: opacity 0.7s linear;
   }
   .project-title {
     transition: color 0.7s;
   }
   &:hover,
   &:focus {
-    & img {
-      opacity: 0.5;
+    img {
+      opacity: 0.5 !important;
     }
     & .project-title {
       text-decoration: underline;
@@ -39,11 +34,11 @@
 
 /* carousel detail styling */
 
-.carousel{
-  button{
+.carousel {
+  button {
     transition: color 0.5s;
     &:hover,
-    &:focus{
+    &:focus {
       color: rgba(0, 0, 0, 0.5);
     }
   }
@@ -75,37 +70,36 @@
   border-color: rgba(128, 128, 128, 0.142);
 }
 
-.fade-in-half-s{
+.fade-in-half-s {
   animation: fadeInAnimation ease 0.5s;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
 }
 
-.fade-in-1s{
+.fade-in-1s {
   animation: fadeInAnimation ease 1s;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
 }
 
-.fade-in-2s{
+.fade-in-2s {
   animation: fadeInAnimation ease 2s;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
 }
 
-.fade-in-3s{
+.fade-in-3s {
   animation: fadeInAnimation ease 3s;
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
 }
 
-
 @keyframes fadeInAnimation {
   0% {
-      opacity: 0;
+    opacity: 0;
   }
   100% {
-      opacity: 1;
+    opacity: 1;
   }
 }
 
@@ -133,7 +127,6 @@
     padding: 5vw 12vw 5vw 9vw;
   }
 }
-
 
 @media (min-width: 650px) {
   .vertical {

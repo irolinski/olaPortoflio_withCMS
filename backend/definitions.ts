@@ -1,6 +1,7 @@
 import { Request } from "express"
-export interface RequestWithSession extends Request {
+export interface RequestWithSessionAndFlash extends Request {
   session?: any // or any other type
+  flash: any
 }
 
 // export interface RequestWithFlash extends Request {

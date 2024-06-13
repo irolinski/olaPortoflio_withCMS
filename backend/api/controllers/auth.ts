@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import { RequestWithSession } from "../../definitions";
+import { RequestWithSessionAndFlash } from "../../definitions";
 const bcrypt = require("bcrypt");
 
 // postgress initalization
@@ -18,7 +18,7 @@ const client = new Client(process.env.DATABASE_URL);
   }
 })();
 
-export const getRegister = (req: Request, res: Response, next: any) => {
+export const getRegister = (req: RequestWithSessionAndFlash, res: Response, next: any) => {
   try {
     client.query(`SELECT * FROM "user"`, function (err: string, result: any) {
       const rowCount = result.rows.length;
@@ -38,7 +38,7 @@ export const getRegister = (req: Request, res: Response, next: any) => {
   }
 };
 
-export const postRegister = async (req: Request, res: Response, next: any) => {
+export const postRegister = async (req: RequestWithSessionAndFlash, res: Response, next: any) => {
   const { username, password, e_mail } = req.body;
   const hash = await bcrypt.hash(password, 12);
   const queryText = `INSERT INTO "user" (username, password, e_mail) VALUES (
@@ -57,7 +57,7 @@ export const getLogin = (req: Request, res: Response) => {
   res.render("auth/login");
 };
 
-export const postLogin = async (req: RequestWithSession, res: Response, next: any) => {
+export const postLogin = async (req: RequestWithSessionAndFlash, res: Response, next: any) => {
   const { username, password } = req.body;
   try {
     let user = await client.query({
@@ -83,7 +83,7 @@ export const postLogin = async (req: RequestWithSession, res: Response, next: an
   }
 };
 
-export const getLogout = (req: RequestWithSession, res: Response) => {
+export const getLogout = (req: RequestWithSessionAndFlash, res: Response) => {
   req.session.user_authenticated = null;
   req.flash('success', 'See you!')
   res.redirect("/login");
