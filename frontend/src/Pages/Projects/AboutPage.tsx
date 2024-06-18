@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ScaleLoader } from "react-spinners";
 import Footer from "../../Components/Footer";
+import { apiUrl } from "../../App";
 
 type aboutProps = {
   instagramUrl: string;
@@ -24,7 +25,7 @@ export default function AboutPage({instagramUrl, location}: aboutProps) {
   useEffect(() => {
     (async () => {
       const aboutmeAPIRes = await fetch(
-        "https://ola-kasprzkiewicz-portfolio-cms.vercel.app/api/about-me"
+        `${apiUrl}/about-me`
       );
       const data = await aboutmeAPIRes.json();
       setAboutData(data);

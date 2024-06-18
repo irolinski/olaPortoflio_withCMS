@@ -42,7 +42,7 @@ export default function Navbar({ location }: navbarProps) {
             <div className="relative flex h-16 items-center">
               {/* Desktop nav */}
               <div>
-                <a href="/#/start">
+                <a href={`${baseUrl}#/start`}>
                   <span className="font-header hover:text-gray-600/75 text-2xl lg:text-3xl hover:cursor-none">
                     Ola Kasprzykiewicz
                   </span>

@@ -1,3 +1,4 @@
+
 import { Route, Routes, Navigate, useLocation } from "react-router-dom";
 import "./App.scss";
 import Navbar from "./Components/Navbar";
@@ -8,6 +9,7 @@ import AboutPage from "./Pages/Projects/AboutPage.tsx";
 import { useEffect, useState } from "react";
 
 export const baseUrl: string = "/";
+export const apiUrl: string = "https://ola-kasprzkiewicz-portfolio-cms.vercel.app/api"
 
 export type seriesType = {
   name: string;
@@ -21,7 +23,6 @@ export type dataType = Array<seriesType>;
 export default function App() {
   const location = useLocation();
 
-  // const blankData: any[] | (() => any[]) = [];
 
   let [imageData, setImageData] = useState<any[]>([]);
   const [instagramUrl, setInstagramUrl] = useState<string>("");
@@ -30,10 +31,10 @@ export default function App() {
   useEffect(() => {
     (async () => {
       const seriesAPIRes = await fetch(
-        "https://ola-kasprzkiewicz-portfolio-cms.vercel.app/api/series"
+        `${apiUrl}/series`
       );
       const profileAPIRes = await fetch(
-        "https://ola-kasprzkiewicz-portfolio-cms.vercel.app/api/about-me"
+        `${apiUrl}/about-me`
       );
       const series = await seriesAPIRes.json();
       const profile = await profileAPIRes.json();
@@ -99,3 +100,4 @@ export default function App() {
     </>
   );
 }
+
