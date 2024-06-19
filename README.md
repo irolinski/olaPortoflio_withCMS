@@ -1,6 +1,10 @@
-<b>This web-app is an in-production clone of: https://github.com/irolinski/miniamlisticPhotoPortfolio_withCMS-demo
+<b>This web-app is an in-production clone of:
+ 
+https://github.com/irolinski/miniamlisticPhotoPortfolio_withCMS-demo
 
-Front-end based on: https://github.com/irolinski/minimalisticPhotographyPortfolio_1</b>
+Front-end based on: 
+
+https://github.com/irolinski/minimalisticPhotographyPortfolio_1</b>
 
 
 <h1 align="center">
